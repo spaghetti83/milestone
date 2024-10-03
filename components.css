@@ -17,13 +17,13 @@ body{
     height: auto;
     margin: 15px 0px;
 
-    
+    padding: 10px 5px;
    
 }
 .label-container{
     width: 90%;
     margin: auto;
-    border: turquoise solid;
+    
 }
 .title{
     font-size: larger;
@@ -37,7 +37,7 @@ body{
 .input-container{
     width: 90%;
     margin: auto;
-    border: turquoise solid;
+   
 }
 input{
     width: 90%;
