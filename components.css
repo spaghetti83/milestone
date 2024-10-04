@@ -48,11 +48,21 @@ body{
     margin: auto;
    
 }
+
+/* inserire un div per creare i bordi e fare lo spazio per l'icona */
 input{
-    width: 90%;
+    width: 100%;
+    border-radius: var(--default-border-radius);
+    border: 0.1px solid var(--default-disabled-text);
+    min-height: 30px;
+   
 }
 textarea{
     width: 90%;
+    border-radius: var(--default-border-radius);
+    border: 0.1px solid var(--default-disabled-text);
+    box-shadow: var(--default-shadow-color);
+    min-height: 30px;
 }
 
 .btn-container{
