@@ -11,8 +11,19 @@
     --default-disabled-text: #8f8f8f;
 
     --default-border-radius: 4px;
+    --milestone-border-radius: 12px
 
 }
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+
 body{
     background-color: var(--background-default-color) ;
     display: flex;
@@ -25,6 +36,7 @@ body{
     box-shadow: 0px 0px 8px var(--default-shadow-color);
    
     min-width: 300px;
+    
     height: auto;
     margin: 15px 0px;
 
@@ -97,4 +109,33 @@ button {
 .disabled{
     background-color: var(--disabled-btn-color);
     color: #8f8f8f;
+}
+
+/* MILESTONE CONTAINER */
+
+.milestone-container{
+    box-sizing: border-box;
+    max-width: 300px;
+    height: 300px;
+    background-color: #A6D4FF ;
+    border-radius: var(--milestone-border-radius);
+    margin: 10px;
+    box-shadow: 0 0 8px var(--default-shadow-color);
+    padding: 10px;
+}
+
+.milestone-header{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+
+    border: #00C7BE solid;
+}
+.picture{
+  margin: 0;
+}
+.user-pic{
+   clip-path: circle(40%);
+   width: 80px;
 }
