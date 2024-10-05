@@ -114,14 +114,16 @@ button {
 /* MILESTONE CONTAINER */
 
 .milestone-container{
+    position: relative;
     box-sizing: border-box;
     max-width: 300px;
-    height: 300px;
+    height: auto;
     background-color: #A6D4FF ;
     border-radius: var(--milestone-border-radius);
     margin: 10px;
     box-shadow: 0 0 8px var(--default-shadow-color);
     padding: 10px;
+    z-index: 10;
 }
 
 .milestone-header{
@@ -129,8 +131,6 @@ button {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
-
-    border: #00C7BE solid;
 }
 .picture{
   margin: 0;
@@ -139,3 +139,13 @@ button {
    clip-path: circle(40%);
    width: 80px;
 }
+.milestone-mask{
+    background-color: var(--background-default-color);
+    min-width: 100%;
+    min-height: 100px;
+    border-radius: var(--milestone-border-radius);
+    
+    
+}
+
+/* ---------------- */
