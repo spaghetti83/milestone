@@ -33,18 +33,24 @@ body{
     align-content: center;
     
 }
-.div-spacer{
+.div-spacer {
     min-height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
 }
-.box-container{
-   
+
+.box-container {
+
     background-color: var(--background-default-color);
     border-radius: 12px;
     box-shadow: 0px 0px 8px var(--default-shadow-color);
     min-width: 1vw;
     padding: 20px 10px;
-    
-   
+
+
 }
 .main-container{
     margin-top: 20px;
@@ -87,7 +93,14 @@ textarea{
     box-shadow: var(--default-shadow-color);
     min-height: 30px;
 }
-
+select{
+    width: 100%;
+    border-radius: var(--default-border-radius);
+    border: 0.1px solid var(--default-disabled-text);
+    margin-left: 10px;
+    max-width: 90%
+    
+}
 .btn-container{
     display: flex;
     flex-wrap: wrap;
