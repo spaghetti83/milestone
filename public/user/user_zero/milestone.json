@@ -1,0 +1,11 @@
+{
+    "user_id": 123,
+    "hobby": "photography",
+    "hobby_start_year": 2015,
+    "favorite_color": "blue",
+    "title": "Nature Photographer",
+    "subtitle": "Capturing the beauty of the world, one shot at a time.",
+    "photo_path": "/user/pictures/profile.jpg",
+    "stones": 33,
+    "timestamp": "2024-10-06T22:40:00Z"
+  }
