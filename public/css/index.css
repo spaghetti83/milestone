@@ -69,12 +69,14 @@ body{
     flex-wrap: nowrap;
     flex-direction: row;
 }
+
 .picture{
   margin: 0;
+  
 }
 .user-pic{
-   clip-path: circle(40%);
-   width: 80px;
+   clip-path: circle(50%);
+   max-width: 60px;
 }
 .stone-counter{
     display: flex;
@@ -89,13 +91,16 @@ body{
     margin: 20px 0;
     display: flex;
     align-items: center;
+    overflow-x: scroll;
 }
 .timeline{
-    width: 1000px;
+    width: 100px;
     height: 5px;
     background-color: var(--timeline-color) ;
-    position: relative;
     
+}
+.stones {
+
 }
 /* ---------------- */
 .menu-container{  
