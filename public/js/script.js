@@ -12,7 +12,7 @@ const userMilestones = [
     {
       "user_id": 123,
       "milestoneID": 1,
-      "milestone_start_year": 2023,
+      "milestone_start_year": 1990,
       "color": "blue",
       "title": "Nature Photographer",
       "subtitle": "Capturing the beauty of the world, one shot at a time.",
@@ -23,7 +23,7 @@ const userMilestones = [
     {
       "user_id": 124,
       "milestoneID": 2,
-      "milestone_start_year": 2022,
+      "milestone_start_year": 2000,
       "color": "green",
       "title": "Track&Field Runner",
       "subtitle": "Never give up.",
@@ -42,7 +42,8 @@ const milestoneData = [
           "event": "First 5k race completed",
           "milestone": "running",
           "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z"
+          "timestamp": "2024-10-07T22:40:00Z",
+          "milestoneID" : 2
         },
         {
           "id": 123,
@@ -50,7 +51,8 @@ const milestoneData = [
           "event": "10k race personal best",
           "milestone": "running",
           "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z"
+          "timestamp": "2024-10-07T22:40:00Z",
+          "milestoneID" : 2
         },
         {
           "id": 123,
@@ -58,7 +60,8 @@ const milestoneData = [
           "event": "First half marathon completed",
           "milestone": "running",
           "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z"
+          "timestamp": "2024-10-07T22:40:00Z",
+          "milestoneID" : 2
         },
         {
           "id": 123,
@@ -66,7 +69,8 @@ const milestoneData = [
           "event": "First marathon completed",
           "milestone": "running",
           "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z"
+          "timestamp": "2024-10-07T22:40:00Z",
+          "milestoneID" : 2
         },
         {
           "id": 123,
@@ -74,7 +78,8 @@ const milestoneData = [
           "event": "Ultramarathon completed",
           "milestone": "running",
           "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z"
+          "timestamp": "2024-10-07T22:40:00Z",
+          "milestoneID" : 2
         }
       ]
 
@@ -113,7 +118,6 @@ const createUserMilestone = () => {
                         
                         </div>
                         <div class="milestone-mask">
-                            <!-- MILESTONE HERE -->
                                 <div class="timeline" id="timeline${index}"></div>
                         </div>
                     </div>
@@ -122,14 +126,48 @@ const createUserMilestone = () => {
         const milestoneDiv = document.createElement('div')
         milestoneDiv.innerHTML = milestoneLayout
         console.log(milestoneDiv)
-        body.append(milestoneDiv)        
+        body.append(milestoneDiv)  
+        
+        /* calculation to get the length of the timeline
+        based from the starting year of the milestone   2024 - 1999 = 25 years | 
+        multyplied for 1000 you get a 25000px timeline length*/
         let timeline = document.getElementById(`timeline${index}`)
-        const yearSize = 1000 //number of pixel for every year = (zoom)
+        /* changing this value you change the size in length of every year
+        in the timeline, basicly you can zoom in and out incresing o decresing it */
+        const yearSize = 100 
         const timelineLength = calculateTime(el.milestone_start_year) * yearSize
-        console.log(el.milestone_start_year, timelineLength)
         timeline.style.width = `${timelineLength}px`
-        console.log('width', timeline.style.width)
         timeline.style.marginRight = `${50}px`
+        /* yearline are the little vertical line at the beginning of every year in
+        the timeline */
+        /* CHANGE WITH THIS STRING = <div class="years-lines" id="${MY-ID}"></div>  */
+    
+        let yearInc = 0
+        console.log('calc',calculateTime(el.milestone_start_year))
+        for( let i = 0; i< calculateTime(el.milestone_start_year); i++){
+            const yearsString = `<div class="years-lines" id="year-line${i}"></div>`
+            let yearsLine = document.createElement('div')
+            yearsLine.innerHTML = yearsString
+            yearInc = yearInc + yearSize
+            yearsLine.style.marginLeft = `${yearInc}px`
+            console.log('yearsInc',yearInc)
+        }
+        
+        /* stones population */
+        const timelineNode = document.getElementById(`timeline${index}`)
+        const tempMilestoneID = el.milestoneID
+        
+        milestoneData.forEach( (el,index) => {
+            if(el.milestoneID === tempMilestoneID){
+                let stoneString = `<span id="stone${index}" "class="material-symbols-outlined">beenhere</span>`
+                let tempDiv = document.createElement('div')
+                tempDiv.innerHTML = stoneString
+                let inc = 0
+                inc = inc + yearSize
+                tempDiv.style.marginLeft = `${inc}px`
+                timelineNode.append(tempDiv)
+            }
+        })
         
     });
     
@@ -138,25 +176,6 @@ const createUserMilestone = () => {
 }
 createUserMilestone()
 
-const createStone = ()=>{
-    const timeline = document.getElementById('timeline')
-    const yearSize = 100 //number of pixel for every year = (zoom)
-    const timelineLength = calculateTime(milestone_start_year) * yearSize
-    let stonePosition = 0
-    stonePosition = stonePosition + (timelineLength/calculateTime(milestone_start_year))
-    console.log(stonePosition)
 
-    stoneString = '<span class="material-symbols-outlined">beenhere</span>'
-    
-    
-    for (let i = 0; i < milestoneData.length; i++) {
-        const stone = document.createElement('div')
-        stone.innerHTML = stoneString
-        const stonesObj = stone.children
-        //timeline.append(stonesObj[0])
-        
-    }
-   
-}
 
 
