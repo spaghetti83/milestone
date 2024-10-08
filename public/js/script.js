@@ -79,7 +79,7 @@ const milestoneData = [
       "milestone": "running",
       "color": "green",
       "timestamp": "2024-10-07T22:40:00Z",
-      "milestoneID": 1
+      "milestoneID": 2
     }
   ]
 
@@ -87,9 +87,10 @@ let {ev_id,ev_date,ev_event,ev_milestone,ev_color,ev_timestamp} = milestoneData
 
 const calculateTime = (start = 2000) =>{
      const today = new Date()
-     const startY = new Date(`01-01-${start}`)
+     const startY = new Date(`${start}-01-01`)
     let currentYear = today.getFullYear()
     let difference = currentYear - startY.getFullYear()
+    console.log('differnce', difference * 366)
     return difference
 }
 
@@ -138,28 +139,29 @@ const createUserMilestone = () => {
         const timelineLength = calculateTime(el.milestone_start_year) * yearSize
         /* since the time line ends at the biginnig of the current year we need to add the
         remain part till today, here the calculus */
-        const getDaysFromStartOfYear = (year,month = 0, day = 0) => {
-            const dateT = new Date()
-            const calcThisYear = new Date(dateT.getFullYear(year,0,0), month, day)
-            const millsecTillToday = dateT - calcThisYear
+        const getDaysFromStartOfYear = (startYear,startMonth,startDay,thisYear, thisMonth,thisDay) => {
+            const dateElement = new Date()
+            const dateT = new Date(startYear,startMonth,startDay)
+            console.log(dateT)
+            const calcThisYear = new Date(thisYear,thisMonth,thisDay)
+            const millsecTillToday = calcThisYear - dateT
             const oneDay = 1000 * 60 * 60 * 24
-            const daysTillToday = Math.floor(millsecTillToday / oneDay)
-            console.log('days till today',daysTillToday)
+            const daysTillToday = Math.round(millsecTillToday / oneDay)
             return daysTillToday
             
         }
-        
+       
          //number of the day in a scale of 365 per year
          const getYear = new Date()
-         console.log('this year',getDaysFromStartOfYear(getYear.getFullYear()))
-         getDaysFromStartOfYear(getYear.getFullYear())
-         let currentYearTimeline = Math.floor((yearSize / 365) * getDaysFromStartOfYear(getYear.getFullYear()))
-         console.log(currentYearTimeline)
-
-
+         const yy = getYear.getFullYear()
+         const mm = getYear.getMonth()
+         const dd = getYear.getDate()
+         let currentYearTimeline = Math.floor((yearSize / 365) * getDaysFromStartOfYear(yy,mm,dd,yy,0,1))
+         console.log('curr year timeline',Math.abs(currentYearTimeline))
         /* I will add this value at the end of the time line, for the days passed from the
         beginnig of this year untill today*/
-        timeline.style.width = `${timelineLength + currentYearTimeline}px`
+        timeline.style.width = `${timelineLength + Math.abs(currentYearTimeline)}px`
+        console.log('timeline length',timelineLength)
         timeline.style.marginRight = `${50}px`
         /* yearline are the little vertical line at the beginning of every year in
         the timeline, IMPORTANT: yearInc is -(yearSize) to start at the very beginning of the time line with the right year*/
@@ -203,12 +205,20 @@ const createUserMilestone = () => {
         
         milestoneData.forEach( (el,index) => {
             if(el.milestoneID === tempMilestoneID){
-                let stoneString = `<span id="stone${index}" class="material-symbols-outlined"></span>`
+                //let stoneString = `<span id="stone${index}" class="material-symbols-outlined"></span>`
                 let tempDiv = document.createElement('div')
                 tempDiv.classList = "material-symbols-outlined"
                 tempDiv.id = `stone${index}`
                 tempDiv.textContent = googleFontLogo //this string stands for a logo in material-symbols-outlined from google fonts
-               
+                let extractDate = new Date(el.date)
+                const today = new Date()
+                let yy = extractDate.getFullYear()
+                let mm = extractDate.getMonth()
+                let dd = extractDate.getDate()
+                console.log(el.milestoneID,"extract",extractDate)
+                let yVal = getDaysFromStartOfYear(yy,mm,dd,today.getFullYear(),today.getMonth(),today.getDate())
+                console.log('days till today', yVal)
+                tempDiv.style.marginLeft = `${(timelineLength - yVal)}px`
                 timelineNode.appendChild(tempDiv)
             }
         })
