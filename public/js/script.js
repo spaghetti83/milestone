@@ -134,7 +134,7 @@ const createUserMilestone = () => {
         let timeline = document.getElementById(`timeline${index}`)
         /* changing this value you change the size in length of every year
         in the timeline, basicly you can zoom in and out incresing o decresing it */
-        const yearSize = 100 
+        const yearSize = 300
         const timelineLength = calculateTime(el.milestone_start_year) * yearSize
         timeline.style.width = `${timelineLength}px`
         timeline.style.marginRight = `${50}px`
@@ -145,16 +145,18 @@ const createUserMilestone = () => {
         let yearInc = 0
         console.log('calc',calculateTime(el.milestone_start_year))
         for( let i = 0; i< calculateTime(el.milestone_start_year); i++){
-            const yearsString = `<div class="years-lines" id="year-line${i}"></div>`
             let yearsLine = document.createElement('div')
-            yearsLine.innerHTML = yearsString
+            yearsLine.classList = 'years-lines'
+            yearsLine.id = `years-lines${i}`
+            timeline.appendChild(yearsLine)
             yearInc = yearInc + yearSize
             yearsLine.style.marginLeft = `${yearInc}px`
             console.log('yearsInc',yearInc)
+            
         }
         
         /* stones population */
-        const timelineNode = document.getElementById(`timeline${index}`)
+        /* const timelineNode = document.getElementById(`timeline${index}`)
         const tempMilestoneID = el.milestoneID
         
         milestoneData.forEach( (el,index) => {
@@ -167,7 +169,7 @@ const createUserMilestone = () => {
                 tempDiv.style.marginLeft = `${inc}px`
                 timelineNode.append(tempDiv)
             }
-        })
+        }) */
         
     });
     

@@ -92,16 +92,18 @@ body{
     overflow-x: auto;
 }
 .timeline{
+    position: relative;
     width: 100px;
     height: 5px;
     background-color: var(--timeline-color) ;
     margin-top: 50px;
 }
 .years-lines{
-    width: 5px;
+    position: absolute;
+    width: 3px;
     height: 20px;
     background-color: var(--timeline-color);
-    margin-top: 50px;
+    margin-top: -8px;
     
 }
 .stones {
