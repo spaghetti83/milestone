@@ -4,3 +4,4 @@ MILESTONES:
 -gestire meglio le dimensioni foto profilo
 -margin-left delle caption title e subtitle
 -fare fetch dei dati dell'user (userData)
+-controllare se la distanza dei delimitatori dei mesi e' coerente con i dati dell'user
