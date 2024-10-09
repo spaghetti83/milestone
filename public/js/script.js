@@ -90,7 +90,7 @@ const calculateTime = (start = 2000) =>{
      const startY = new Date(`${start}-01-01`)
     let currentYear = today.getFullYear()
     let difference = currentYear - startY.getFullYear()
-    console.log('differnce', difference * 366)
+    
     return difference
 }
 
@@ -133,42 +133,42 @@ const createUserMilestone = () => {
         based from the starting year of the milestone   2024 - 1999 = 25 years | 
         multyplied for 1000 you get a 25000px timeline length*/
         let timeline = document.getElementById(`timeline${index}`)
-        /* changing this value you change the size in length of every year
-        in the timeline, basicly you can zoom in and out incresing o decresing it */
-        const yearSize = 200
-        const timelineLength = calculateTime(el.milestone_start_year) * yearSize
+        
         /* since the time line ends at the biginnig of the current year we need to add the
         remain part till today, here the calculus */
-        const getDaysFromStartOfYear = (startYear,startMonth,startDay,thisYear, thisMonth,thisDay) => {
+        const getDaysBetweenTwoDays = (startYear,startMonth,startDay,secondYear, secondMonth,secondDay) => {
             const dateElement = new Date()
             const dateT = new Date(startYear,startMonth,startDay)
-            console.log(dateT)
-            const calcThisYear = new Date(thisYear,thisMonth,thisDay)
+            const calcThisYear = new Date(secondYear,secondMonth,secondDay)
             const millsecTillToday = calcThisYear - dateT
             const oneDay = 1000 * 60 * 60 * 24
             const daysTillToday = Math.round(millsecTillToday / oneDay)
             return daysTillToday
             
         }
+       console.log('getDaysBetweenTwoDays function:',getDaysBetweenTwoDays(2000,0,1,2024,0,1) / 365)
+       /* changing this value you change the size in length of every year
+        in the timeline, basicly you can zoom in and out incresing o decresing it */
+        const t = new Date()
+        const tY = t.getFullYear()
+        const tM = t.getMonth()
+        const tD = t.getDate()
+
+        const yearSize = 200
+        const timelineLength = getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,tM,tD)  
+        console.log('TIMELINE LENGTH',timelineLength, 'DAYS')
        
-         //number of the day in a scale of 365 per year
-         const getYear = new Date()
-         const yy = getYear.getFullYear()
-         const mm = getYear.getMonth()
-         const dd = getYear.getDate()
-         let currentYearTimeline = Math.floor((yearSize / 365) * getDaysFromStartOfYear(yy,mm,dd,yy,0,1))
-         console.log('curr year timeline',Math.abs(currentYearTimeline))
-        /* I will add this value at the end of the time line, for the days passed from the
-        beginnig of this year untill today*/
-        timeline.style.width = `${timelineLength + Math.abs(currentYearTimeline)}px`
-        console.log('timeline length',timelineLength)
+       
+       
+        timeline.style.width = `${timelineLength}px`
+        
         timeline.style.marginRight = `${50}px`
         /* yearline are the little vertical line at the beginning of every year in
         the timeline, IMPORTANT: yearInc is -(yearSize) to start at the very beginning of the time line with the right year*/
         let yearInc = -(yearSize)
         
-        for( let i = 0; i<= calculateTime(el.milestone_start_year); i++){
-
+        for( let i = 0; i<= Math.floor(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,0,1) / 365);i++){
+          console.log(i)
             
             /* YEARS DELIMITATOR */
             let yearsLine = document.createElement('div')
@@ -180,8 +180,9 @@ const createUserMilestone = () => {
             /* some calculus for the label */
             const today = new Date()
             const thisYear = today.getFullYear()
-            let labelYEarCaluculator = thisYear - calculateTime(el.milestone_start_year) + i
-            ////////////////////////////////////////////
+            const extractYear = el.milestone_start_year
+            let labelYEarCaluculator = thisYear - Math.floor(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,0,1) / 365) + i
+            /////////////////////////////////////////////
             let yearsLabel = document.createElement('div')
             yearsLabel.classList = 'years-label'
             yearsLabel.id = `years-label${i}`
@@ -193,7 +194,9 @@ const createUserMilestone = () => {
 
             /* PUTTING IN THE RIGHT PLACE */
             
-            yearInc = yearInc + yearSize
+            //CALCULATING THE GAP BETWEEN EVERY YEARSLINE AND YEARLABEL
+            let zoomLevel = 2
+            yearInc = timelineLength - getDaysBetweenTwoDays(el.milestone_start_year + i,0,1,tY,tM,tD)
             yearsLine.style.marginLeft = `${yearInc}px`
             yearsLabel.style.marginLeft = `${yearInc + 5}px`
 
@@ -215,9 +218,7 @@ const createUserMilestone = () => {
                 let yy = extractDate.getFullYear()
                 let mm = extractDate.getMonth()
                 let dd = extractDate.getDate()
-                console.log(el.milestoneID,"extract",extractDate)
-                let yVal = getDaysFromStartOfYear(yy,mm,dd,today.getFullYear(),today.getMonth(),today.getDate())
-                console.log('days till today', yVal)
+                let yVal = getDaysBetweenTwoDays(yy,mm,dd,today.getFullYear(),today.getMonth(),today.getDate())
                 tempDiv.style.marginLeft = `${(timelineLength - yVal)}px`
                 timelineNode.appendChild(tempDiv)
             }
