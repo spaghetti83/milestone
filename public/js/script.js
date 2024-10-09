@@ -38,7 +38,7 @@ let { userID, milestoneID,milestone_start_year, color, title, subtitle, photo_pa
 const milestoneData = [
     {
       "id": 123,
-      "date": "2000-04-15",
+      "date": "2025-01-01",
       "event": "First 5k race completed",
       "milestone": "running",
       "color": "green",
@@ -47,13 +47,13 @@ const milestoneData = [
     },
     {
       "id": 123,
-      "date": "2005-10-10",
+      "date": "2000-01-01",
       "event": "10k race personal best",
       "milestone": "running",
       "color": "green",
       "timestamp": "2024-10-07T22:40:00Z",
-      "milestoneID": 2
-    },
+      "milestoneID": 1
+    }/* ,
     {
       "id": 123,
       "date": "2011-05-21",
@@ -70,17 +70,17 @@ const milestoneData = [
       "milestone": "running",
       "color": "green",
       "timestamp": "2024-10-07T22:40:00Z",
-      "milestoneID": 2
+      "milestoneID": 1
     },
     {
       "id": 123,
-      "date": "2024-07-02",
+      "date": "2024-10-09",
       "event": "Ultramarathon completed",
       "milestone": "running",
       "color": "green",
       "timestamp": "2024-10-07T22:40:00Z",
-      "milestoneID": 2
-    }
+      "milestoneID": 1
+    } */
   ]
 
 let {ev_id,ev_date,ev_event,ev_milestone,ev_color,ev_timestamp} = milestoneData
@@ -146,29 +146,26 @@ const createUserMilestone = () => {
             return daysTillToday
             
         }
-       console.log('getDaysBetweenTwoDays function:',getDaysBetweenTwoDays(2000,0,1,2024,0,1) / 365)
-       /* changing this value you change the size in length of every year
+        /* changing this value you change the size in length of every year
         in the timeline, basicly you can zoom in and out incresing o decresing it */
         const t = new Date()
         const tY = t.getFullYear()
-        const tM = t.getMonth()
+        const tM = t.getMonth() + 1
         const tD = t.getDate()
-
-        const yearSize = 200
-        const timelineLength = getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,tM,tD)  
-        console.log('TIMELINE LENGTH',timelineLength, 'DAYS')
+        console.log(tY,12,31)
+        let zoomLevel = 1
+        const timelineLength = Math.round(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,12,31))  / zoomLevel
+        console.log('TIMELINE LENGTH', timelineLength)
        
-       
+       const marginRightTimeLine = 50
        
         timeline.style.width = `${timelineLength}px`
         
-        timeline.style.marginRight = `${50}px`
-        /* yearline are the little vertical line at the beginning of every year in
-        the timeline, IMPORTANT: yearInc is -(yearSize) to start at the very beginning of the time line with the right year*/
-        let yearInc = -(yearSize)
+        timeline.style.marginRight = `${marginRightTimeLine}px`
+        
         
         for( let i = 0; i<= Math.floor(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,0,1) / 365);i++){
-          console.log(i)
+          
             
             /* YEARS DELIMITATOR */
             let yearsLine = document.createElement('div')
@@ -180,7 +177,6 @@ const createUserMilestone = () => {
             /* some calculus for the label */
             const today = new Date()
             const thisYear = today.getFullYear()
-            const extractYear = el.milestone_start_year
             let labelYEarCaluculator = thisYear - Math.floor(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,0,1) / 365) + i
             /////////////////////////////////////////////
             let yearsLabel = document.createElement('div')
@@ -195,8 +191,8 @@ const createUserMilestone = () => {
             /* PUTTING IN THE RIGHT PLACE */
             
             //CALCULATING THE GAP BETWEEN EVERY YEARSLINE AND YEARLABEL
-            let zoomLevel = 2
-            yearInc = timelineLength - getDaysBetweenTwoDays(el.milestone_start_year + i,0,1,tY,tM,tD)
+            
+            yearInc = timelineLength - getDaysBetweenTwoDays(el.milestone_start_year + i,0,1,tY,12,31) / zoomLevel
             yearsLine.style.marginLeft = `${yearInc}px`
             yearsLabel.style.marginLeft = `${yearInc + 5}px`
 
@@ -210,17 +206,21 @@ const createUserMilestone = () => {
             if(el.milestoneID === tempMilestoneID){
                 //let stoneString = `<span id="stone${index}" class="material-symbols-outlined"></span>`
                 let tempDiv = document.createElement('div')
-                tempDiv.classList = "material-symbols-outlined"
+                tempDiv.className = "material-symbols-outlined stones"
                 tempDiv.id = `stone${index}`
                 tempDiv.textContent = googleFontLogo //this string stands for a logo in material-symbols-outlined from google fonts
                 let extractDate = new Date(el.date)
                 const today = new Date()
                 let yy = extractDate.getFullYear()
-                let mm = extractDate.getMonth()
+                let mm = extractDate.getMonth() + 1
                 let dd = extractDate.getDate()
-                let yVal = getDaysBetweenTwoDays(yy,mm,dd,today.getFullYear(),today.getMonth(),today.getDate())
-                tempDiv.style.marginLeft = `${(timelineLength - yVal)}px`
+                console.log('DATE', yy,mm,dd)
+                let yVal = getDaysBetweenTwoDays(yy,mm,dd,today.getFullYear(),today.getMonth() ,today.getDate())
+                console.log(yVal, timelineLength)
+                tempDiv.style.marginLeft = `${(timelineLength - yVal - 155)}px`
+                console.log()
                 timelineNode.appendChild(tempDiv)
+                
             }
         })
         

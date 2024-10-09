@@ -21,7 +21,9 @@
   'FILL' 1,
   'wght' 400,
   'GRAD' 0,
-  'opsz' 24
+  'opsz' 24;
+   
+
 }
 
 
@@ -113,6 +115,9 @@ body{
     font-weight: 600;
     color: rgba(143, 143, 143,20%);
     
+}
+.stones{
+   
 }
 
 /* ---------------- */
