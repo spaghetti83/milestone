@@ -2,8 +2,7 @@ const userPic = document.getElementById('user-pic')
 const titleElement = document.getElementById('title')
 const subTitleElement  = document.getElementById('sub-title')
 const stonesCounter = document.getElementById('counter')
-const body = document.querySelector('body')
-
+const body = document.getElementById('main')
 const googleFontLogo = 'beenhere'
 
 /* add fetch data to get userMilestones values. the actual values will be stored in a MongoDB */
@@ -126,7 +125,7 @@ const createUserMilestone = () => {
                 `
         const milestoneDiv = document.createElement('div')
         milestoneDiv.innerHTML = milestoneLayout
-        
+        milestoneDiv.style.zIndex = 1
         body.append(milestoneDiv)  
         
         /* calculation to get the length of the timeline
