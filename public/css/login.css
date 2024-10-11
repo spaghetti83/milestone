@@ -13,6 +13,7 @@
     --default-border-radius: 4px;
     --milestone-border-radius: 12px;
     --menu-height: 30px;
+    --default-margin: 30px;
 }
 
 .material-symbols-outlined {
@@ -25,55 +26,30 @@
 
 
 body{
-    background-color: var(--background-default-color) ;
-    width: auto;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-content: center;
+    
+    border: #8f00c7 solid;
     
 }
-.div-spacer {
-    min-height: 100px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-   
 
-}
 
 .box-container {
-    background-color: var(--background-default-color);
-    border-radius: 12px;
-    box-shadow: 0px 0px 8px var(--default-shadow-color);
-    padding: 20px 10px;
-    width: 100vw;
-    height: calc(100vh - var(--menu-height)*4);
-    
-
+   
+   border: #00C7BE solid;
 }
-.form-container {
-    background-color: var(--background-default-color);
-    border-radius: 12px;
-    box-shadow: 0px 0px 8px var(--default-shadow-color);
-    padding: 20px 10px;
-    width: 100%;
-    height: 100%
-    
-    
 
-}
 
 .main-container{
     margin-top: 20px;
-   
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
 }
 
 .label-container{
-    width: 90%;
+    width: 100%;
     margin: auto;
-    
+   margin-left: var(--default-margin);
+   margin-top: var(--default-margin);;
 }
 .title{
     font-size: larger;
@@ -81,15 +57,19 @@ body{
     text-shadow: 0px 3px 5px var(--default-shadow-color);
 }
 .declaimer-password{
-    
     font-size: smaller;
-    width: 100%;
     text-align: center;
+    /* margin-right: var(--default-margin);; */
+    width: 100vw;
 }
 .input-container{
-    width: 90%;
-    margin: auto;
-   
+    width: 100%;
+   border: solid 0.1px;
+   border-radius: var(--default-border-radius);
+   display: flex;
+   margin-left: var(--default-margin);
+   margin-right: var(--default-margin);
+   background-color: white;
 }
 
 input{
@@ -97,8 +77,28 @@ input{
     border-radius: var(--default-border-radius);
     border: 0.1px solid var(--default-disabled-text);
     min-height: 30px;
+    border: none;
+    
    
 }
+.icon-input-box{
+    max-width: 30px;
+    max-height: 30px;
+    display: flex;
+    align-items: center;
+    color: var(--default-disabled-text);
+    
+}
+.mandatory-input-box{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FF2D55;
+    border-radius: var(--default-border-radius);
+}
+
 
 
 .btn-container{

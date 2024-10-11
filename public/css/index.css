@@ -55,7 +55,7 @@ body{
 
 .label-container{
     width: 90%;
-    margin: auto;
+    margin-left:  15px;
     
 }
 .title{
@@ -75,23 +75,28 @@ body{
     margin: 10px;
     box-shadow: 0 0 8px var(--default-shadow-color);
     padding: 10px;
+    box-sizing: content-box;
     
 }
 
 .milestone-header{
-    width: 100%;
     display: flex;
-    flex-wrap: nowrap;
     flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    margin: 10px;
+    padding: 0;
+    
 }
 
-.picture{
-  margin: 0;
-  
-}
+
 .user-pic{
-   clip-path: circle(50%);
-   max-width: 60px;
+   /* clip-path: circle(50%);*/
+   width: 60px; 
+   height: 60px;
+   border-radius: 50%;
+   object-fit: cover
+   
 }
 .stone-counter{
     display: flex;
@@ -103,7 +108,6 @@ body{
     min-width: 100%;
     min-height: 100px;
     border-radius: var(--milestone-border-radius);
-    margin: 30px 0;    
     overflow-x: auto;
 }
 .timeline{
