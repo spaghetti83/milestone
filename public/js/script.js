@@ -11,7 +11,7 @@ const userMilestones = [
     {
       "user_id": 123,
       "milestoneID": 1,
-      "milestone_start_year": 1990,
+      "milestone_start_year": 2000,
       "color": "blue",
       "title": "Nature Photographer",
       "subtitle": "Capturing the beauty of the world, one shot at a time.",
@@ -22,7 +22,7 @@ const userMilestones = [
     {
       "user_id": 124,
       "milestoneID": 2,
-      "milestone_start_year": 1990,
+      "milestone_start_year": 1987,
       "color": "green",
       "title": "Track&Field Runner",
       "subtitle": "Never give up.",
@@ -46,7 +46,7 @@ const milestoneData = [
   },
   {
       "id": 123,
-      "date": "1991-01-01",
+      "date": "1996-01-01",
       "event": "First 5k race completed",
       "milestone": "running",
       "color": "green",
@@ -125,6 +125,8 @@ const createUserMilestone = () => {
                 `
         const milestoneDiv = document.createElement('div')
         milestoneDiv.innerHTML = milestoneLayout
+        
+
         milestoneDiv.style.zIndex = 1
         body.append(milestoneDiv)  
         
@@ -147,7 +149,7 @@ const createUserMilestone = () => {
         }
         /* changing this value you change the size in length of every year
         in the timeline, basicly you can zoom in and out incresing o decresing it */
-        let zoomLevel = 3 ///LET IT AT 1 (ONE)
+        let zoomLevel = 1///LET IT AT 1 (ONE)
 
 
         const t = new Date()
@@ -160,8 +162,8 @@ const createUserMilestone = () => {
        
        const marginRightTimeLine = 40
        
+
         timeline.style.width = `${timelineLength}px`
-        
         timeline.style.marginRight = `${marginRightTimeLine}px`
         
         
@@ -179,11 +181,12 @@ const createUserMilestone = () => {
             const today = new Date()
             const thisYear = today.getFullYear()
             let labelYEarCaluculator = thisYear - Math.round(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,0,1) / 365) + i
-            /////////////////////////////////////////////
+            
             let yearsLabel = document.createElement('div')
             yearsLabel.classList = 'years-label'
             yearsLabel.id = `years-label${i}`
             yearsLabel.textContent = labelYEarCaluculator
+
 
             /* APPEND BOTH */
             timeline.appendChild(yearsLine)
@@ -218,7 +221,7 @@ const createUserMilestone = () => {
                 tempDiv.style.flex = 'wrap'
                 tempDiv.style.flexDirection = 'row'
                 tempDiv.style.position = 'absolute'
-                tempDiv.style.marginTop = '-6px'
+                tempDiv.style.marginTop = '0px'
                 timelineNode.appendChild(tempDiv)
                 //tempDiv.textContent = googleFontLogo //this string stands for a logo in material-symbols-outlined from google fonts
                 let extractDate = new Date(el.date)

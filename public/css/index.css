@@ -114,14 +114,14 @@ body{
     flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
-   
+    height: 3px;
 }
 .years-lines{
     position: absolute;
     width: 3px;
     height: 20px;
     background-color: var(--timeline-color);
-    margin-top: -8px;
+    margin-top: 0px;
     
 }
 .years-label{
