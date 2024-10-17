@@ -22,7 +22,7 @@ const userMilestones = [
     {
       "user_id": 124,
       "milestoneID": 2,
-      "milestone_start_year": 1987,
+      "milestone_start_year": 1990,
       "color": "green",
       "title": "Track&Field Runner",
       "subtitle": "Never give up.",
@@ -84,15 +84,28 @@ const milestoneData = [
 
 let {ev_id,ev_date,ev_event,ev_milestone,ev_color,ev_timestamp} = milestoneData
 
-const calculateTime = (start = 2000) =>{
-     const today = new Date()
-     const startY = new Date(`${start}-01-01`)
-    let currentYear = today.getFullYear()
-    let difference = currentYear - startY.getFullYear()
-    
-    return difference
-}
+const fetchData =  () =>{
+  try {
+    fetch('/',{
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'}
+    }
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  )
+  } catch (error) {
+    console.log(error)
+  }
+   
 
+
+}
+fetchData()
 
 
 
@@ -149,7 +162,7 @@ const createUserMilestone = () => {
         }
         /* changing this value you change the size in length of every year
         in the timeline, basicly you can zoom in and out incresing o decresing it */
-        let zoomLevel = 1///LET IT AT 1 (ONE)
+        let zoomLevel = 2///LET IT AT 1 (ONE)
 
 
         const t = new Date()
@@ -246,7 +259,3 @@ const createUserMilestone = () => {
 
 }
 createUserMilestone()
-
-
-
-
