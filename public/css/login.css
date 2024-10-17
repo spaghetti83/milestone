@@ -27,18 +27,21 @@
 
 body{
     
-    border: #8f00c7 solid;
+    
     
 }
-
-
 .box-container {
-   
-   border: #00C7BE solid;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    max-width: 400px;
+
+
 }
 
 
 .main-container{
+    max-width: 400px;
     margin-top: 20px;
    display: flex;
    flex-wrap: wrap;
@@ -59,8 +62,6 @@ body{
 .declaimer-password{
     font-size: smaller;
     text-align: center;
-    /* margin-right: var(--default-margin);; */
-    width: 100vw;
 }
 .input-container{
     width: 100%;

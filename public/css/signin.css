@@ -50,7 +50,7 @@ body{
     padding: 20px 10px;
     width: 100vw;
     height: calc(100vh - var(--menu-height)*4);
-   
+   max-width: 400px;
 
 }
 .form-container {
