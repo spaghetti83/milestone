@@ -32,9 +32,8 @@ const userMilestones = [
     }
   ]
 
-let { userID, milestoneID,milestone_start_year, color, title, subtitle, photo_path, stones,timestamp} = userMilestones
 
-const milestoneData = [
+/* const milestoneData = [
   {
       "id": 123,
       "date": "1990-01-01",
@@ -80,34 +79,50 @@ const milestoneData = [
       "timestamp": "2024-10-07T22:40:00Z",
       "milestoneID": 2
   }
-]
+] */
 
-let {ev_id,ev_date,ev_event,ev_milestone,ev_color,ev_timestamp} = milestoneData
+  let milestoneData = []
+
+
+const ROUTE = 'http://localhost:5000/'
 
 const fetchData =  () =>{
   try {
-    fetch('/',{
+    fetch(ROUTE,{
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
-    }
-    .then(response => response.json())
+    })
+    .then(response => {
+      response.json()
+      console.log('response', response)
+  })
     .then(data => {
-      console.log(data)
+      console.log('server data',data)
     })
     .catch(error => {
       console.log(error)
     })
-  )
+    
   } catch (error) {
     console.log(error)
   }
-   
+  
 
 
 }
 fetchData()
 
+console.log('fetched data',)
 
+let { userID, milestoneID,milestone_start_year, color, title, subtitle, photo_path, stones,timestamp} = userMilestones
+
+let {ev_color,ev_id,ev_date,ev_event,ev_milestone,ev_milestoneID,ev_timestamp} = milestoneData
+/* let ev_id = milestoneData.id
+let ev_date = milestoneData.date
+let ev_event = milestoneData.event
+let ev_milestone = milestoneData.milestone
+let ev_color = milestoneData.color
+let ev_timestamp = milestoneData.timestamp */
 
 const createUserMilestone = () => {
     const bodyElement = document.createElement('div')
