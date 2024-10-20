@@ -19,7 +19,7 @@ app.get('/',(req,res,next) => {
         },
         {
           "id": 123,
-          "date": "2005-10-10",
+          "date": "2001-05-18",
           "event": "10k race personal best",
           "milestone": "running",
           "color": "green",
@@ -28,7 +28,7 @@ app.get('/',(req,res,next) => {
         },
         {
           "id": 123,
-          "date": "2011-05-21",
+          "date": "2002-02-18",
           "event": "First half marathon completed",
           "milestone": "running",
           "color": "green",
@@ -37,7 +37,7 @@ app.get('/',(req,res,next) => {
         },
         {
           "id": 123,
-          "date": "2018-12-05",
+          "date": "1994-03-18",
           "event": "First marathon completed",
           "milestone": "running",
           "color": "green",

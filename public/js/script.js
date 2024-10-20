@@ -108,12 +108,7 @@ fetchData()
 let { userID, milestoneID,milestone_start_year, color, title, subtitle, photo_path, stones,timestamp} = userMilestones
 
 let {ev_color,ev_id,ev_date,ev_event,ev_milestone,ev_milestoneID,ev_timestamp} = milestoneData
-/* let ev_id = milestoneData.id
-let ev_date = milestoneData.date
-let ev_event = milestoneData.event
-let ev_milestone = milestoneData.milestone
-let ev_color = milestoneData.color
-let ev_timestamp = milestoneData.timestamp */
+
 
 const createUserMilestone = () => {
     const bodyElement = document.createElement('div')
@@ -168,7 +163,7 @@ const createUserMilestone = () => {
         }
         /* changing this value you change the size in length of every year
         in the timeline, basicly you can zoom in and out incresing o decresing it */
-        let zoomLevel = 2///LET IT AT 1 (ONE)
+        let zoomLevel = 5///LET IT AT 1 (ONE)
 
 
         const t = new Date()
@@ -184,7 +179,7 @@ const createUserMilestone = () => {
 
         timeline.style.width = `${timelineLength}px`
         timeline.style.marginRight = `${marginRightTimeLine}px`
-        
+        timeline.style.height = '3px'
         
         for( let i = 0; i<= Math.floor(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,11,31) / 365);i++){
           
@@ -218,7 +213,7 @@ const createUserMilestone = () => {
             yearInc = timelineLength - getDaysBetweenTwoDays(el.milestone_start_year + i,0,1,tY,11,31) / zoomLevel
             yearsLine.style.marginLeft = `${yearInc}px`
             yearsLabel.style.marginLeft = `${yearInc + 5}px`
-
+            yearsLine.style.marginTop = '0px'
         }
         
         /* stones population */
@@ -228,7 +223,7 @@ const createUserMilestone = () => {
         milestoneData.forEach( (el,index) => {
           
             if(el.milestoneID === tempMilestoneID){
-                
+                /* milestone creation */
                 let tempDiv = document.createElement('div')
                 tempDiv.classList.add('stones')
                 tempDiv.id = `stone${index}`
@@ -242,8 +237,34 @@ const createUserMilestone = () => {
                 tempDiv.style.flexDirection = 'row'
                 tempDiv.style.position = 'absolute'
                 tempDiv.style.marginTop = '0px'
+                tempDiv.addEventListener('mouseover', ()=> {
+                  tempLabel.style.cursor = 'pointer'
+                  //zInd = tempLabel.style.zIndex
+                  tempLabel.style.zIndex = '10'
+                })
+                tempDiv.addEventListener('mouseleave', ()=> {
+                  tempLabel.style.cursor = 'pointer'
+                  tempLabel.style.zIndex = 9
+                })
                 timelineNode.appendChild(tempDiv)
-                //tempDiv.textContent = googleFontLogo //this string stands for a logo in material-symbols-outlined from google fonts
+                ///////////////////////////////////////////////////
+                /* label creation */
+                const strLabelStone = `<div class="label-stone-container id=label-${index}">${el.event}</div>`
+                let tempLabel = document.createElement('div')
+                tempLabel.style.backgroundColor = '#F5F5F5'
+                tempLabel.style.boxShadow = '0px 0px 8px #8f8f8f'
+                
+                tempLabel.style.borderRadius = '8px'
+                tempLabel.style.padding = '3px'
+                tempLabel.style.position = 'absolute'
+                tempLabel.style.marginTop = '45px'
+                tempLabel.style.zIndex = index
+                //let zInd = ''
+                tempLabel.innerHTML = strLabelStone
+               
+                console.log(el.event)
+                timelineNode.append(tempLabel)
+                ///////////////////////////////////////////////////
                 let extractDate = new Date(el.date)
                 const today = new Date()
                 let yy = extractDate.getFullYear()
@@ -255,7 +276,7 @@ const createUserMilestone = () => {
                 console.log('yVal', yVal)
                 
                 tempDiv.style.marginLeft = `${(timelineLength - yVal)}px`
-                
+                tempLabel.style.marginLeft = `${(timelineLength - yVal)}px`
                 
             }
         })
@@ -265,4 +286,3 @@ const createUserMilestone = () => {
     
 
 }
-//createUserMilestone()
