@@ -86,23 +86,16 @@ const userMilestones = [
 
 const ROUTE = 'http://localhost:5000/'
 
-const fetchData =  () =>{
+const fetchData =  async () =>{
   try {
-    fetch(ROUTE,{
+    const response =  await fetch(ROUTE,{
       method: 'GET',
       headers: {'Content-Type': 'application/json'}
     })
-    .then(response => {
-      response.json()
-      console.log('response', response)
-  })
-    .then(data => {
-      console.log('server data',data)
-    })
-    .catch(error => {
-      console.log(error)
-    })
-    
+    milestoneData = await response.json()
+    console.log('server data',milestoneData)
+    createUserMilestone()
+    return milestoneData
   } catch (error) {
     console.log(error)
   }
@@ -111,8 +104,6 @@ const fetchData =  () =>{
 
 }
 fetchData()
-
-console.log('fetched data',)
 
 let { userID, milestoneID,milestone_start_year, color, title, subtitle, photo_path, stones,timestamp} = userMilestones
 
@@ -235,6 +226,7 @@ const createUserMilestone = () => {
         const tempMilestoneID = el.milestoneID
         
         milestoneData.forEach( (el,index) => {
+          
             if(el.milestoneID === tempMilestoneID){
                 
                 let tempDiv = document.createElement('div')
@@ -273,4 +265,4 @@ const createUserMilestone = () => {
     
 
 }
-createUserMilestone()
+//createUserMilestone()
