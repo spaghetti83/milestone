@@ -11,7 +11,7 @@ const userMilestones = [
     {
       "user_id": 123,
       "milestoneID": 1,
-      "milestone_start_year": 2000,
+      "milestone_start_year": 1990,
       "color": "blue",
       "title": "Nature Photographer",
       "subtitle": "Capturing the beauty of the world, one shot at a time.",
@@ -84,7 +84,7 @@ const userMilestones = [
   let milestoneData = []
 
 
-const ROUTE = 'http://localhost:5000/'
+const ROUTE = 'http://localhost:5000/new-stone'
 
 const fetchData =  async () =>{
   try {
@@ -221,9 +221,10 @@ const createUserMilestone = () => {
         const tempMilestoneID = el.milestoneID
         
         milestoneData.forEach( (el,index) => {
-          
-            if(el.milestoneID === tempMilestoneID){
+          el.milestoneID == tempMilestoneID ? console.log('TRUE') : console.log('FALSE') 
+            if(el.milestoneID == tempMilestoneID){
                 /* milestone creation */
+                console.log('creating stones...')
                 let tempDiv = document.createElement('div')
                 tempDiv.classList.add('stones')
                 tempDiv.id = `stone${index}`
@@ -278,7 +279,7 @@ const createUserMilestone = () => {
                 
                 tempDiv.style.marginLeft = `${(timelineLength - yVal)}px`
                 tempLabel.style.marginLeft = `${(timelineLength - yVal)}px`
-                
+                console.log('all stone created')
             }
         })
         
