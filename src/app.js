@@ -1,10 +1,18 @@
 const express = require('express')
-const path = require('path')
 const  app = express()
 const cors = require('cors')
+const mongoose = require('mongoose')
+
 
 app.use(cors())
 app.use(express.json())
+
+const dbURI = 'mongodb+srv://spaghetto:1234@sandbox.szx8f.mongodb.net/?retryWrites=true&w=majority&appName=sandbox'
+mongoose.connect(dbURI)
+.then(response => console.log(response))
+.catch(err => console.log(err))
+
+
 
 app.get('/',(req,res,next) => {
     const myData = [

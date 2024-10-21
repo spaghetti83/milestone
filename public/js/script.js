@@ -237,6 +237,7 @@ const createUserMilestone = () => {
                 tempDiv.style.flexDirection = 'row'
                 tempDiv.style.position = 'absolute'
                 tempDiv.style.marginTop = '0px'
+                /* tapping over the stones pull the labels to the first layer (to improve) */
                 tempDiv.addEventListener('mouseover', ()=> {
                   tempLabel.style.cursor = 'pointer'
                   //zInd = tempLabel.style.zIndex
