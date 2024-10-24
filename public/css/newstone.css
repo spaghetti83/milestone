@@ -126,7 +126,7 @@ textarea{
     max-width: 200px;
     max-width: 500px;
     border-radius: 12px;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
@@ -136,7 +136,7 @@ textarea{
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    box-shadow: 0 0 10px 0px var(--default-shadow-color);
+   /*  box-shadow: 0 0 10px 0px var(--default-shadow-color); */
 }
 
 .add {
