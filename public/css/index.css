@@ -25,7 +25,9 @@
    
 
 }
-
+.material-symbols-outlined:hover {
+    cursor: pointer;
+}
 
 body{
     background-color: var(--background-default-color) ;
@@ -52,6 +54,7 @@ body{
     padding: 15px 0;
     
 }
+
 
 .label-container{
     width: 90%;
