@@ -5,7 +5,11 @@ const stonesCounter = document.getElementById('counter')
 const body = document.getElementById('main')
 const googleFontLogo = 'beenhere'
 
+
+
 /* add fetch data to get userMilestones values. the actual values will be stored in a MongoDB */
+
+
 
 const userMilestones = [
     {
@@ -81,12 +85,14 @@ const userMilestones = [
   }
 ] */
 
+
+/*  fetchUserData fill milestoneData with the milestone's user data */
   let milestoneData = []
 
 
-const ROUTE = 'http://localhost:5000/new-stone'
+const ROUTE = 'http://localhost:5000/index'
 
-const fetchData =  async () =>{
+const fetchUserData =  async () =>{
   try {
     const response =  await fetch(ROUTE,{
       method: 'GET',
@@ -103,7 +109,7 @@ const fetchData =  async () =>{
 
 
 }
-fetchData()
+fetchUserData()
 
 let { userID, milestoneID,milestone_start_year, color, title, subtitle, photo_path, stones,timestamp} = userMilestones
 

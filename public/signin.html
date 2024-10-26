@@ -10,52 +10,54 @@
 </head>
 <body>
     <!-- BOX INPUT TEX/PASSWORD -->
-    <div class="box-container">
-        <div class="main-container">
-            <div class="label-container">
-                <div class="title"></div>
-                <div class="sub-title">Insert your email</div>
+    <form action="/signin-data" method="post" id="signin-form">
+        <div class="box-container">
+            <div class="main-container">
+                <div class="label-container">
+                    <div class="title"></div>
+                    <div class="sub-title">Insert your email</div>
+                </div>
+                <div class="input-container">
+                    <input type="email" class="text-input" id="email" name="email">
+                </div>
             </div>
-            <div class="input-container">
-                <input type="email" class="text-input" >
-            </div>
-        </div>
-        
-        <div class="main-container">
-            <div class="label-container">
-                <div class="title"></div>
-                <div class="sub-title">Insert your password</div>
-            </div>
-            <div class="input-container">
-                <input type="password" class="text-input passward">
-            </div>
-            <div class="label-container">
-                <div class="title"></div>
-                <div class="sub-title">Reinsert your password</div>
-            </div>
-            <div class="input-container">
-                <input type="password" class="text-input passward">
-            </div>
-        </div>
     
-    <!-- ------------------------------------- -->
-        <div class="div-spacer"></div>
-     <!-- BOX BUTTONS -->
+            <div class="main-container">
+                <div class="label-container">
+                    <div class="title"></div>
+                    <div class="sub-title" >Insert your password</div>
+                </div>
+                <div class="input-container" >
+                    <input type="password" class="text-input password" id="password" name="password">
+                </div>
+                <div class="label-container">
+                    <div class="title"></div>
+                    <div class="sub-title">Reinsert your password</div>
+                </div>
+                <div class="input-container">
+                    <input type="password" class="text-input password">
+                </div>
+            </div>
     
-        <div class="main-container">
-            <div class="btn-container">
-                <button class="primary"><span class="primary-ico-btn"></span>Log-in</button>
-                <button class="cancel"><span class="cancel-ico-btn"></span>Cancel</button>
+            <!-- ------------------------------------- -->
+            <div id="response-message"></div>
+            <!-- BOX BUTTONS -->
+    
+            <div class="main-container">
+                <div class="btn-container">
+                    <button class="primary" type="submit"><span class="primary-ico-btn" ></span>Sign-in</button>
+                    <button class="cancel" ><span class="cancel-ico-btn"></span>Cancel</button>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- ------------------------------------- -->
-    <div class="menu-container">
-        <span class="material-symbols-outlined" id="profile">person</span>
-        <span class="material-symbols-outlined" id="main">dashboard</span>
-        <span class="material-symbols-outlined" id="add-page">add_box</span>
-        <span class="material-symbols-outlined" id="milestones">beenhere</span>
-    </div>
-    <script src="/public/js/script.js"></script>
+    </form>
+        <!-- ------------------------------------- -->
+        <div class="menu-container">
+            <span class="material-symbols-outlined" id="profile">person</span>
+            <span class="material-symbols-outlined" id="main">dashboard</span>
+            <span class="material-symbols-outlined" id="add-page">add_box</span>
+            <span class="material-symbols-outlined" id="milestones">beenhere</span>
+        </div>
+    <script src="/js/sign-in.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 //navigation throgh pages
-export function navigationMenu (){
+function navigationMenu (){
     const profile = document.getElementById('profile')
     const main = document.getElementById('main')
     const addPage = document.getElementById('add-page')
@@ -21,5 +21,8 @@ export function navigationMenu (){
       window.location.href = 'achivements.html'
       console.log('click!')
     })
+
+
+    console.log('funzione importata...')
     }
    
