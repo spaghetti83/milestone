@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const milestoneDataSchema = new Schema({
+const stoneDataSchema = new Schema({
     date: {
         type: String,
         required: true
@@ -24,5 +24,5 @@ const milestoneDataSchema = new Schema({
     }
 },{timestamps: true})
 
-const milestoneDataModel = mongoose.model('milestoneData',milestoneDataSchema)
-module.exports = milestoneDataModel
+const stoneDataModel = mongoose.model('milestoneData',stoneDataSchema)
+module.exports = stoneDataModel
