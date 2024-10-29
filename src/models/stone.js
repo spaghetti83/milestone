@@ -24,5 +24,5 @@ const stoneDataSchema = new Schema({
     }
 },{timestamps: true})
 
-const stoneDataModel = mongoose.model('milestoneData',stoneDataSchema)
+const stoneDataModel = mongoose.model('stone-data',stoneDataSchema)
 module.exports = stoneDataModel

@@ -21,8 +21,8 @@ const fetchSignUserData = async ()=> {
         method: form.method,
         headers: { 'Content-Type' : 'application/json'},
         body: JSON.stringify(formData)
-    }
-    ).then(response => response.json())
+    })
+    .then(response => response.json())
     .then(data => { 
         responseMessage(data.status,data.message)
         console.log(data.status, data.message)
