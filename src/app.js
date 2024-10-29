@@ -6,6 +6,8 @@ const mongoose = require('mongoose')
 const Stone = require('./models/stone.js')
 const User = require('./models/new-user.js')
 const userData = require('./models/user-data.js')
+const session = require('express-session')
+const MongoDbStore = require('connect-mongodb-session')(session)
 
 app.use(cors())
 app.use(express.json())
@@ -14,22 +16,47 @@ app.use(express.static(path.join(__dirname, '../public')))
 
 console.log(path.join(__dirname, '../public/', 'index.html'))
 
+
+//CONNECTIONO TO THE DATABASE
 const dbURI = 'mongodb+srv://spaghetto:1234@sandbox.szx8f.mongodb.net/?retryWrites=true&w=majority&appName=sandbox'
 mongoose.connect(dbURI)
     .then(response => console.log('connected to sandbox'))
     .catch(err => console.log(err))
-
-
+//NEW MONGODB-STORE TO STORE THE SESSIONS IN MONGODB (CONNECT-MONGODB-SESSION)
+const store = new MongoDbStore({
+    uri: dbURI,
+    databaseName: 'test',
+    collection: 'session'
+})
+//START A SESSION IN EXPRESS-SESSION
+app.use(session({
+    secret: 'secret string to change later',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false},
+    store: store
+}))
+//CHECK FOR COOKIES WITH SESSION
+const checkSession = (req,res,next) => {
+    if(!req.session.userID){
+        console.log('not found userID sessions')
+        res.redirect('http://localhost:5000/login.html')
+    }else{
+        next()
+    }
+}
 
 app.get('/index', (req, res) => {
-
+    
     Stone.find()
-        .then(response => {
-            res.send(response)
-            console.log('got data')
-        })
-        .catch(err => console.log(err))
-
+    .then(response => {
+        res.send(response)
+        console.log('got data', response)
+    })
+    .catch(err => console.log(err)) 
+  
+    console.log('[...code to show all the milestones...]')
+    
 
 })
 
@@ -55,6 +82,7 @@ const saveUserCrediential = ((req, res,next) => {
         .catch(err => {
             if (err.code === 11000) {
                 const credentialErr = { status: 11000, message: 'this account already exists.' }
+                res.send({ status: 11000, message: 'this account already exists.' })
             }
         })
         
@@ -66,7 +94,7 @@ const saveUserData = ((req, res,next) => {
     newUserData.nickname = ''
     newUserData.pictureID = ''
     newUserData.milestonesIDs = ''
-    newUserData.stonesNumber = ''
+    newUserData.stonesNumber = 0
 
     newUserData.save()
     .then(response => {
@@ -79,15 +107,14 @@ const saveUserData = ((req, res,next) => {
     })
     .catch(err => {
         console.log('ERROR GENERATING USER DATA!', err)
-        response = err
-        
+        res.send({ status: 11000, message: 'this account already exists.' })
     })
     
 })
 
 app.post('/signin-data',saveUserCrediential,saveUserData,(req,res)=>{
     console.log(req.body)
-    res.send({ status: 100, message: 'Creation Completed' })
+    res.send({ status: 200, message: 'Account created' })
 
 })
 
@@ -97,6 +124,11 @@ app.get('/login', (req, res) => {
 
 
 })
+
+app.post('/new-milestone',(req,res)=>{
+    res.send({message: req.body} )
+})
+
 
 app.listen(5000, () => {
     try {
