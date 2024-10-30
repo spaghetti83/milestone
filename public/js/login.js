@@ -35,7 +35,7 @@ const responseMessage = (response,message)=> {
             setTimeout(()=>{
                 responseContainer.innerHTML = '...wait, redirecting to the sign-in page'
                 setTimeout(()=>{
-                    window.location.href = '/signin.html'
+                    window.location.href = '/login.html'
                 },2000)
             },2000)
             break;

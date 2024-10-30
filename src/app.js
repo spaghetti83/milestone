@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const Stone = require('./models/stone.js')
+const Milestone = require('./models/milestone.js')
 const User = require('./models/new-user.js')
 const userData = require('./models/user-data.js')
 const session = require('express-session')
@@ -40,13 +41,13 @@ app.use(session({
 const checkSession = (req,res,next) => {
     if(!req.session.userID){
         console.log('not found userID sessions')
-        res.redirect('http://localhost:5000/login.html')
+        res.send({message: 'no-ok'})
     }else{
         next()
     }
 }
 
-app.get('/index', (req, res) => {
+app.get('/index',checkSession, (req, res) => {
     
     Stone.find()
     .then(response => {
@@ -119,9 +120,18 @@ app.post('/signin-data',saveUserCrediential,saveUserData,(req,res)=>{
 })
 
 
-app.get('/login', (req, res) => {
-    
-
+app.post('/login', (req, res) => {
+    console.log(req.body)
+    User.findOne({email: req.body.email})
+    .then(user => {
+        console.log(user)
+        if(user !== null ){
+            res.send({status: 200, message: 'user found'})
+        }else{
+            res.send({status: 11000, message: 'user not found'})
+        }
+    })
+    .catch(err => console.log(err))
 
 })
 

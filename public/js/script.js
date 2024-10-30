@@ -99,9 +99,13 @@ const fetchUserData =  async () =>{
       headers: {'Content-Type': 'application/json'}
     })
     milestoneData = await response.json()
+    if(milestoneData.message == 'no-ok'){
+        window.location.href = '/login.html'
+    }else{
     console.log('server data',milestoneData)
     createUserMilestone()
     return milestoneData
+    }
   } catch (error) {
     console.log(error)
   }
