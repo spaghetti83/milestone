@@ -90,7 +90,7 @@ const userMilestones = [
   let milestoneData = []
 
 
-const ROUTE = 'http://localhost:5000/index'
+const ROUTE = '/index'
 
 const fetchUserData =  async () =>{
   try {
@@ -99,7 +99,7 @@ const fetchUserData =  async () =>{
       headers: {'Content-Type': 'application/json'}
     })
     milestoneData = await response.json()
-    if(milestoneData.message == 'no-ok'){
+    if(milestoneData.status === 11000){
         window.location.href = '/login.html'
     }else{
     console.log('server data',milestoneData)

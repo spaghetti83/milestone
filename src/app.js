@@ -37,14 +37,17 @@ app.use(session({
     cookie: { secure: false},
     store: store
 }))
-//CHECK FOR COOKIES WITH SESSION
+//CHECK FOR SESSIONS WITH EXPRESS.SESSION
 const checkSession = (req,res,next) => {
-    if(!req.session.userID){
-        console.log('not found userID sessions')
-        res.send({message: 'no-ok'})
-    }else{
+    console.log('CHECK MATCH:',req.session.userID)
+    if (req.session.userID){
+        res.send({status:200, message: 'session found'})
         next()
+    }else{
+        res.send({status: 11000, message: 'no session found, log-in before'})
     }
+ 
+   
 }
 
 app.get('/index',checkSession, (req, res) => {
@@ -121,12 +124,12 @@ app.post('/signin-data',saveUserCrediential,saveUserData,(req,res)=>{
 
 
 app.post('/login', (req, res) => {
-    console.log(req.body)
     User.findOne({email: req.body.email})
     .then(user => {
-        console.log(user)
-        if(user !== null ){
-            res.send({status: 200, message: 'user found'})
+        if(user){
+            req.session.userID = user._id
+            console.log('USER', user._id)
+            res.send({ status: 200, message: 'user found' })
         }else{
             res.send({status: 11000, message: 'user not found'})
         }
@@ -134,6 +137,14 @@ app.post('/login', (req, res) => {
     .catch(err => console.log(err))
 
 })
+
+app.get('/logout',(req,res)=>{
+    req.session.destroy()
+   console.log('session destroyed')
+   
+    
+})
+
 
 app.post('/new-milestone',(req,res)=>{
     res.send({message: req.body} )
