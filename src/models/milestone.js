@@ -15,7 +15,7 @@ const milestoneDataSchema = new Schema({
         required: true
     },
     startingYear: {
-        type: Date,
+        type: Number,
         required: true
     },
     color: {
@@ -28,7 +28,7 @@ const milestoneDataSchema = new Schema({
     },
     stones: [{
         date: {
-            type: String,
+            type: Date,
             required: true
         },
         event: {

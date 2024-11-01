@@ -15,7 +15,7 @@ let userMilestones = []
     {
       "user_id": 123,
       "milestoneID": 1,
-      "milestone_start_year": 1990,
+      "startingYear": 1990,
       "color": "blue",
       "title": "Nature Photographer",
       "subtitle": "Capturing the beauty of the world, one shot at a time.",
@@ -26,7 +26,7 @@ let userMilestones = []
     {
       "user_id": 124,
       "milestoneID": 2,
-      "milestone_start_year": 1990,
+      "startingYear": 1990,
       "color": "green",
       "title": "Track&Field Runner",
       "subtitle": "Never give up.",
@@ -40,7 +40,7 @@ let userMilestones = []
 const milestoneData = [
   {
       "id": 123,
-      "date": "1990-01-01",
+      "date": "2000-01-01",
       "event": "First 5k race completed",
       "milestone": "running",
       "color": "green",
@@ -49,7 +49,7 @@ const milestoneData = [
   },
   {
       "id": 123,
-      "date": "1996-01-01",
+      "date": "1997-01-01",
       "event": "First 5k race completed",
       "milestone": "running",
       "color": "green",
@@ -58,7 +58,7 @@ const milestoneData = [
   },
   {
       "id": 123,
-      "date": "1990-05-04",
+      "date": "1999-05-04",
       "event": "First 5k race completed",
       "milestone": "running",
       "color": "green",
@@ -67,7 +67,7 @@ const milestoneData = [
   },
   {
       "id": 123,
-      "date": "1991-05-01",
+      "date": "1998-05-01",
       "event": "First 5k race completed",
       "milestone": "running",
       "color": "green",
@@ -77,7 +77,7 @@ const milestoneData = [
   {
       "id": 123,
       "date": "2024-12-31",
-      "event": "First 5k race completed",
+      "event": "ciao",
       "milestone": "running",
       "color": "green",
       "timestamp": "2024-10-07T22:40:00Z",
@@ -131,9 +131,6 @@ const fetchMilestoneData = ()=>{
 }
 fetchMilestoneData()
 
-let { userID, milestoneID,milestone_start_year, color, title, subtitle, photo_path, stones,timestamp} = userMilestones
-
-let {ev_color,ev_id,ev_date,ev_event,ev_milestone,ev_milestoneID,ev_timestamp} = milestoneData
 
 
 const createUserMilestone = () => {
@@ -142,9 +139,9 @@ const createUserMilestone = () => {
     //userMilestones.forEach((el,index) => {        
     for (let index = 0; index < userMilestones.length; index++) {
         let el = userMilestones[index]   
-        console.log(el, index)
+        console.log(el.startingYear, index)
         const milestoneLayout = `
-                <div class="milestone-container" >
+                <div class="milestone-container" style="background-color: ${el.color} ;">
                         <div class="milestone-header">
                             <div class="picture">
                                 <img class="user-pic" id="user-pic" src=${el.photo_path} alt="pic-img">
@@ -191,7 +188,7 @@ const createUserMilestone = () => {
         }
         /* changing this value you change the size in length of every year
         in the timeline, basicly you can zoom in and out incresing o decresing it */
-        let zoomLevel = 5///LET IT AT 1 (ONE)
+        let zoomLevel = 4///LET IT AT 1 (ONE)
 
 
         const t = new Date()
@@ -199,7 +196,7 @@ const createUserMilestone = () => {
         const tM = t.getMonth()
         const tD = t.getDate()
         
-        const timelineLength = Math.round(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,11,31)) /zoomLevel
+        const timelineLength = Math.round(getDaysBetweenTwoDays(el.startingYear,0,1,tY,11,31)) /zoomLevel
         console.log('TIMELINE LENGTH', timelineLength)
        
        const marginRightTimeLine = 40
@@ -209,7 +206,7 @@ const createUserMilestone = () => {
         timeline.style.marginRight = `${marginRightTimeLine}px`
         timeline.style.height = '3px'
         
-        for( let i = 0; i<= Math.floor(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,11,31) / 365);i++){
+        for( let i = 0; i<= Math.floor(getDaysBetweenTwoDays(el.startingYear,0,1,tY,11,31) / 365);i++){
           
             
             /* YEARS DELIMITATOR */
@@ -222,7 +219,7 @@ const createUserMilestone = () => {
             /* some calculus for the label */
             const today = new Date()
             const thisYear = today.getFullYear()
-            let labelYEarCaluculator = thisYear - Math.round(getDaysBetweenTwoDays(el.milestone_start_year,0,1,tY,0,1) / 365) + i
+            let labelYEarCaluculator = thisYear - Math.round(getDaysBetweenTwoDays(el.startingYear,0,1,tY,0,1) / 365) + i
             
             let yearsLabel = document.createElement('div')
             yearsLabel.classList = 'years-label'
@@ -238,7 +235,8 @@ const createUserMilestone = () => {
             
             //CALCULATING THE GAP BETWEEN EVERY YEARSLINE AND YEARLABEL
             
-            yearInc = timelineLength - getDaysBetweenTwoDays(el.milestone_start_year + i,0,1,tY,11,31) / zoomLevel
+            yearInc = timelineLength - getDaysBetweenTwoDays(el.startingYear + i,0,1,tY,11,31) / zoomLevel
+            console.log(el.startingYear + i,getDaysBetweenTwoDays(el.startingYear + i,0,1,tY,11,31))
             yearsLine.style.marginLeft = `${yearInc}px`
             yearsLabel.style.marginLeft = `${yearInc + 5}px`
             yearsLine.style.marginTop = '0px'
@@ -249,10 +247,10 @@ const createUserMilestone = () => {
         const tempMilestoneID = el.milestoneID
         
         milestoneData.forEach( (el,index) => {
-          el.milestoneID == tempMilestoneID ? console.log('TRUE') : console.log('FALSE') 
-            if(el.milestoneID == tempMilestoneID){
+          //el.milestoneID == tempMilestoneID ? console.log('TRUE') : console.log('FALSE') 
+            ///if(el.milestoneID == tempMilestoneID){
                 /* milestone creation */
-                console.log('creating stones...')
+                //console.log('creating stones...')
                 let tempDiv = document.createElement('div')
                 tempDiv.classList.add('stones')
                 tempDiv.id = `stone${index}`
@@ -292,7 +290,7 @@ const createUserMilestone = () => {
                 //let zInd = ''
                 tempLabel.innerHTML = strLabelStone
                
-                console.log(el.event)
+                //console.log(el.event)
                 timelineNode.append(tempLabel)
                 ///////////////////////////////////////////////////
                 let extractDate = new Date(el.date)
@@ -302,13 +300,13 @@ const createUserMilestone = () => {
                 let dd = extractDate.getDate()
                 
                 let yVal =  Math.round(getDaysBetweenTwoDays(yy,mm,dd,today.getFullYear(),11 ,31)) / zoomLevel
-                console.log(yVal , timelineLength, timelineLength - yVal)
-                console.log('yVal', yVal)
+                //console.log(yVal , timelineLength, timelineLength - yVal)
+                //console.log('yVal', yVal)
                 
                 tempDiv.style.marginLeft = `${(timelineLength - yVal)}px`
                 tempLabel.style.marginLeft = `${(timelineLength - yVal)}px`
-                console.log('all stone created')
-            }
+                //console.log('all stone created')
+            //}
         })
         
     };

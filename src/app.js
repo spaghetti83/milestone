@@ -153,7 +153,7 @@ app.get('/logout',(req,res)=>{
 
 
 app.post('/new-milestone',(req,res)=>{
-    
+    //If the user logged in create a new milestone
     if(req.session.userID){
         const newMilestone = new Milestone()
         newMilestone.ownerID = req.session.userID
@@ -170,6 +170,8 @@ app.post('/new-milestone',(req,res)=>{
             
         })
         .catch(err => console.log(err))
+    }else{
+        res.redirect('/login')
     }
     ///res.send({message: req.body} )
 })
