@@ -14,7 +14,7 @@ const milestoneDataSchema = new Schema({
         type: String,
         required: true
     },
-    stertingYear: {
+    startingYear: {
         type: Date,
         required: true
     },
@@ -25,8 +25,35 @@ const milestoneDataSchema = new Schema({
     picID: {
         type: String,
         required: false
+    },
+    stones: [{
+        date: {
+            type: String,
+            required: true
+        },
+        event: {
+            type: String,
+            required: true
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        color: {
+            type: String,
+            required: true
+        },
+        milestoneID: {
+            type: String,
+            required: true
+        }
+    }],
+    stonesNumbers: {
+        type: Number,
+        virtual: true,
+        get() { return this.stones.length }
     }
-})
+},{timestamps: true} )
 
 const milestone = mongoose.model('milestones',milestoneDataSchema)
-exports.model = milestone
+module.exports = milestone

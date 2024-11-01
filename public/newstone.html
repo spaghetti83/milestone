@@ -18,7 +18,7 @@
                 <div class="sub-title">Insert the title of the event you will see in the timeline</div>
             </div>
             <div class="input-container">
-                <input type="text" class="text-input" id="title" placeholder="insert your name...">
+                <input type="text" class="text-input" id="title" name="title">
             </div>
         </div>
         <div class="main-container">
@@ -27,13 +27,13 @@
                 <div class="sub-title">Describe the event</div>
             </div>
             <div class="input-container">
-                <textarea name="comments" id="event" class="text-input" placeholder="insert a comment..."></textarea>
+                <textarea name="comments" id="event" class="text-input" name="event"></textarea>
             </div>
         </div>
         <div class="main-container">
             <div class="label-container">
                 <div class="title">Event date</div>
-                <div class="sub-title">Select the date when this event occurred</div>
+                <div class="sub-title" id="event-date">Select the date when this event occurred</div>
             </div>
             <div class="input-container">
                <input type="date" class="text-input" id="event-date">
@@ -60,7 +60,7 @@
         </div>
         
         <div class="btn-container">
-            <button class="add"><span class="primary-ico-btn"></span>Save</button>
+            <button class="add" type="submit"><span class="primary-ico-btn"></span>Save</button>
     </div>
 </div>
     </div>

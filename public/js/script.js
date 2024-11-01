@@ -10,8 +10,8 @@ const googleFontLogo = 'beenhere'
 /* add fetch data to get userMilestones values. the actual values will be stored in a MongoDB */
 
 
-
-const userMilestones = [
+let userMilestones = []
+/* const userMilestones = [
     {
       "user_id": 123,
       "milestoneID": 1,
@@ -34,10 +34,10 @@ const userMilestones = [
       "stones": 107,
       "timestamp": "2024-10-07T22:40:00Z"
     }
-  ]
+  ] */
 
 
-/* const milestoneData = [
+const milestoneData = [
   {
       "id": 123,
       "date": "1990-01-01",
@@ -83,11 +83,11 @@ const userMilestones = [
       "timestamp": "2024-10-07T22:40:00Z",
       "milestoneID": 2
   }
-] */
+]
 
 
 /*  fetchUserData fill milestoneData with the milestone's user data */
-  let milestoneData = []
+/*   let milestoneData = {}
 
 
 const ROUTE = '/index'
@@ -112,8 +112,24 @@ const fetchUserData =  async () =>{
   
 
 
+} */
+//fetchUserData()
+
+const fetchMilestoneData = ()=>{
+  fetch('/index',{
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  })
+  .then( response => response.json())
+  .then( data => {
+    
+    userMilestones = data
+    console.log(userMilestones)
+    createUserMilestone()
+  })
+  .catch(err => console.log('Error fetching Milestones', err))
 }
-fetchUserData()
+fetchMilestoneData()
 
 let { userID, milestoneID,milestone_start_year, color, title, subtitle, photo_path, stones,timestamp} = userMilestones
 
@@ -123,8 +139,10 @@ let {ev_color,ev_id,ev_date,ev_event,ev_milestone,ev_milestoneID,ev_timestamp} =
 const createUserMilestone = () => {
     const bodyElement = document.createElement('div')
     const childrenElements =[]
-    userMilestones.forEach((el,index) => {        
-        
+    //userMilestones.forEach((el,index) => {        
+    for (let index = 0; index < userMilestones.length; index++) {
+        let el = userMilestones[index]   
+        console.log(el, index)
         const milestoneLayout = `
                 <div class="milestone-container" >
                         <div class="milestone-header">
@@ -132,8 +150,8 @@ const createUserMilestone = () => {
                                 <img class="user-pic" id="user-pic" src=${el.photo_path} alt="pic-img">
                             </div>
                             <div class="label-container">
-                                <div class="title" id="title">${el.title}</div>
-                                <div class="sub-title" id="sub-title">${el.subtitle}</div>
+                                <div class="title" id="title">${el.name}</div>
+                                <div class="sub-title" id="sub-title">${el.description}</div>
                             </div>
                             <div class="stone-counter">
                                 <div class="counter" id="counter">${el.stones}</div>
@@ -293,7 +311,7 @@ const createUserMilestone = () => {
             }
         })
         
-    });
+    };
     
     
 

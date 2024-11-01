@@ -41,7 +41,8 @@ app.use(session({
 const checkSession = (req,res,next) => {
     console.log('CHECK MATCH:',req.session.userID)
     if (req.session.userID){
-        res.send({status:200, message: 'session found'})
+        //res.send({status:200, message: 'session found'})
+        console.log('session found')
         next()
     }else{
         res.send({status: 11000, message: 'no session found, log-in before'})
@@ -51,15 +52,18 @@ const checkSession = (req,res,next) => {
 }
 
 app.get('/index',checkSession, (req, res) => {
-    
-    Stone.find()
+  /*   Milestone.find().then(response => {
+        console.log('ALL THE MILESTONE',response)
+    }) */
+    Milestone.find()
     .then(response => {
-        res.send(response)
         console.log('got data', response)
+        res.send(JSON.stringify(response))
+        
     })
     .catch(err => console.log(err)) 
   
-    console.log('[...code to show all the milestones...]')
+   
     
 
 })
@@ -128,6 +132,7 @@ app.post('/login', (req, res) => {
     .then(user => {
         if(user){
             req.session.userID = user._id
+            req.session.userEmail = user.email
             console.log('USER', user._id)
             res.send({ status: 200, message: 'user found' })
         }else{
@@ -141,13 +146,32 @@ app.post('/login', (req, res) => {
 app.get('/logout',(req,res)=>{
     req.session.destroy()
    console.log('session destroyed')
+   res.redirect('/login.html')
    
     
 })
 
 
 app.post('/new-milestone',(req,res)=>{
-    res.send({message: req.body} )
+    
+    if(req.session.userID){
+        const newMilestone = new Milestone()
+        newMilestone.ownerID = req.session.userID
+        newMilestone.name = req.body.title
+        newMilestone.description = req.body.description
+        newMilestone.startingYear = req.body.year
+        newMilestone.color = req.body.color
+        newMilestone.save()
+        .then(response => {
+            console.log(response)
+            User.findOne({_id: response.ownerID})
+                .then(response => console.log(response))
+                .catch(err => console.log(err))
+            
+        })
+        .catch(err => console.log(err))
+    }
+    ///res.send({message: req.body} )
 })
 
 

@@ -30,7 +30,7 @@
                     <div class="sub-title">inserisci con il quale verrà visualizzato il milestone</div>
                 </div>
                 <div class="input-container">
-                    <input type="text" class="text-input" name="title" id="title">
+                    <input type="text" class="text-input" name="title" id="title" required>
                 </div>
             </div>
             <div class="main-container">
@@ -39,7 +39,7 @@
                     <div class="sub-title">inserisci una frase che descriva il tuo milestone</div>
                 </div>
                 <div class="input-container">
-                    <input type="text" class="text-input" name="sub-title" id="sub-title">
+                    <input type="text" class="text-input" name="sub-title" id="sub-title" required>
                 </div>
             </div>
             <div class="main-container">
@@ -48,7 +48,7 @@
                     <div class="sub-title">Seleziona l'anno in cui far partire il milestone</div>
                 </div>
                 <div class="input-container">
-                    <select id="year-picker" name="year-picker">
+                    <select id="year-picker" name="year-picker" required>
                         <script>
                             const currentYear = new Date().getFullYear();
                             for (let i = currentYear; i >= currentYear - 100; i--) {

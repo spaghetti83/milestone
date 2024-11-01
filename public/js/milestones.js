@@ -6,7 +6,7 @@ const description = document.getElementById('sub-title')
 const year = document.getElementById('year-picker')
 const color = document.querySelectorAll('.color-btn')
 
-
+/* COLOR PICKER */
 const disableAllBtn = () => {
     color.forEach((btn, ind) => {
         let btnSelection = document.getElementById(ind)
@@ -41,3 +41,4 @@ fetch(form.action,{
 .then(data => console.log(data))
 .catch(err => console.log(err))
 })
+///////////////////////////////////////////////////////
