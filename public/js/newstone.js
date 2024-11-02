@@ -25,17 +25,17 @@ const fetchMilestoneData = ()=>{
         selectInput.add(newOption)
       }
       
-      
+      console.log('FETCHING MILESTONES FOR SELECT ELEMENT')
     })
     .catch(err => console.log('Error fetching Milestones', err))
   }
   fetchMilestoneData()
   
 
-  addBtn.addEventListener('submit', (event)=>{
+  form.addEventListener('submit', (event)=>{
    event.preventDefault()
-    console.log(title.value,eventDescription.value,date.value,selectInput.value)
-    fetch('/new-stone',{
+   console.log(selectInput.value)
+  fetch('/new-stone',{
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify({

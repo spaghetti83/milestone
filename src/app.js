@@ -184,8 +184,10 @@ app.post('/new-stone', (req,res)=> {
         milestoneID: req.body.milestoneID
     }
     console.log(addNewStone)
+    console.log('Milestone ID', req.body.id)
+    //Milestone.findOne({id: req.body.id})
     Milestone.findByIdAndUpdate(
-        req.body.id,
+        req.body.milestoneID,
         { $push: {stones: addNewStone}},
         {new: true}
     ).then(response => console.log(response))
