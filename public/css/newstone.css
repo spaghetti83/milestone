@@ -106,6 +106,7 @@ select{
     justify-content: center;
     width: 100%;
     grid-area: btn-container;
+    margin-top: 200px;
 }
 button {
     min-width: 250px ;

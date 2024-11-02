@@ -176,6 +176,23 @@ app.post('/new-milestone',(req,res)=>{
     ///res.send({message: req.body} )
 })
 
+app.post('/new-stone', (req,res)=> {
+    const addNewStone = {
+        date: req.body.date,
+        event: req.body.event,
+        title: req.body.title,
+        milestoneID: req.body.milestoneID
+    }
+    console.log(addNewStone)
+    Milestone.findByIdAndUpdate(
+        req.body.id,
+        { $push: {stones: addNewStone}},
+        {new: true}
+    ).then(response => console.log(response))
+    .catch(err => console.log(err))
+
+
+})
 
 app.listen(5000, () => {
     try {

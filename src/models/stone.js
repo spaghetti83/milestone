@@ -14,10 +14,6 @@ const stoneDataSchema = new Schema({
         type: String,
         required: true
     },
-    color: {
-        type: String,
-        required: true
-    },
     milestoneID: {
         type: String,
         required: true

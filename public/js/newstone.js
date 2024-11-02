@@ -1,27 +1,51 @@
+
+const form = document.getElementById('form-new-stone')
+const selectInput = document.getElementById('milestones-selection')
 const title = document.getElementById('title')
-const event = document.getElementById('event')
+const eventDescription = document.getElementById('event')
 const eventDate = document.getElementById('event-date')
-const color = document.querySelectorAll('.color-btn')
+const addBtn = document.getElementById('add-btn')
+
+let milestonesData = {}
+let milestonesList = []
 
 
-const disableAllBtn = ()=>{
-    color.forEach((btn,ind) => {
-        let btnSelection = document.getElementById(ind)
-        btn.style.border = 'none'
-        btnSelection.style.boxShadow = '0px 0px 10px 2px lightgray'
+
+const fetchMilestoneData = ()=>{
+    fetch('/index',{
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
     })
-}
-
-color.forEach((btn,ind)=>{
-    btn.style.boxShadow = '0px 0px 10px 2px lightgray'
-    btn.id = ind
-    let btnSelection = document.getElementById(ind)
-    btn.addEventListener('click',()=>{
-        disableAllBtn()
-        btnSelection.style.border = `1px solid ${btnSelection.style.backgroundColor}`
-        btnSelection.style.boxShadow = `0 0 25px 6px ${btnSelection.style.backgroundColor}`
-        
+    .then( response => response.json())
+    .then( data => {
+      for (let i = 0; i < data.length; i++) {
+        let newOption = document.createElement('option')
+        newOption.value = data[i]._id
+        newOption.text = data[i].name
+        selectInput.add(newOption)
+      }
+      
+      
     })
+    .catch(err => console.log('Error fetching Milestones', err))
+  }
+  fetchMilestoneData()
+  
 
-})
+  addBtn.addEventListener('submit', (event)=>{
+   event.preventDefault()
+    console.log(title.value,eventDescription.value,date.value,selectInput.value)
+    fetch('/new-stone',{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            title: title.value, 
+            event: eventDescription.value, 
+            date: eventDate.value, 
+            milestoneID: selectInput.value })
+    })
+    .then(response => response.json)
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
+  })
 
