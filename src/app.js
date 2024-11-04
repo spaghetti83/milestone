@@ -38,6 +38,135 @@ app.use(session({
     cookie: { secure: false},
     store: store
 }))
+
+
+
+
+
+
+
+const saveUserCrediential = ((req, res, next) => {
+    req.session.regenerate(err => {
+        if (err) {
+            console.log('error regenerating session', err)
+        } else {
+            console.log('session successfully regenerated')
+            //res.send({ status: 200, message: 'logged out, redirecting to log in...' })
+        }
+    })
+    /* creating salt and hash to store the token */
+    const randomRound = Math.floor(Math.random() * 10)
+    bcrypt.genSalt(randomRound, (err, salt) => {
+        console.log('creating salt')
+        if (err) {
+            console.log('error creating salt', err)
+        } else {
+            console.log('creating hash')
+            bcrypt.hash(req.body.password, salt, (err, hash) => {
+                if (err) {
+                    console.log('error creating hash', err)
+
+                } else {
+                    console.log('saving data', salt, hash)
+
+                    /* data sent from the form the client filled */
+                    const newUser = new User()
+                    newUser.email = req.body.email
+                    newUser.hash = hash
+                    newUser.salt = salt
+                    newUser.save()
+                        .then(response => {
+                            console.log(response)
+                            if (res.statusCode === 200) {
+                                console.log('user signed in successfully')
+                                ////////////////////////
+                                console.log('logging in:', req.body.email)
+                                console.log('session:', req.session)
+                                User.findOne({ email: req.body.email })
+                                    .then(user => {
+                                        console.log('user value', user)
+                                        if (user) {
+                                            req.session.userID = user._id
+                                            req.session.userEmail = user.email
+                                            console.log('USER', user._id)
+
+                                            next()
+                                        } else {
+                                            console.log('user not found')
+                                            res.send({ status: 11000, message: 'user not found' })
+                                        }
+                                    })
+                                    .catch(err => console.log(err))
+                                /////////////////////////
+                                
+                            }
+                        })
+                        .catch(err => {
+                            if (err.code === 11000) {
+                                const credentialErr = { status: 11000, message: 'this account already exists.' }
+                                res.send({ status: 11000, message: 'this account already exists.' })
+                            }
+                        })
+
+                }
+
+            })
+        }
+
+    })
+
+
+})
+
+
+const logInMiddleware = (req,res,next)=>{
+    console.log('logging in:', req.body.email)
+    console.log('session:', req.session)
+    User.findOne({email: req.body.email})
+    .then(user => {
+        console.log('user value', user)
+        if(user){
+            req.session.userID = user._id
+            req.session.userEmail = user.email
+            console.log('USER', user._id)
+            
+            next()
+        }else{
+            console.log('user not found')
+            res.send({status: 11000, message: 'user not found'})
+        }
+    })
+    .catch(err => console.log(err))
+}
+
+
+const saveUserData = ((req, res, next) => {
+    /* data generated to generate the user-data database */
+    console.log('body datas', req.body)
+    const newUserData = new userData()
+    newUserData.email = req.body.email
+    newUserData.nickname = ''
+    newUserData.pictureID = ''
+    newUserData.milestonesIDs = ''
+    newUserData.stonesNumber = 0
+    newUserData.save()
+        .then(response => {
+
+
+            console.log('user data saved')
+            next()
+
+        })
+        .catch(err => {
+            console.log('ERROR GENERATING USER DATA!', err)
+            //res.send({ status: 11000, message: 'this account already exists.' })
+        })
+
+})
+
+
+
+
 //CHECK FOR SESSIONS WITH EXPRESS.SESSION
 const checkSession = (req,res,next) => {
     console.log('CHECK MATCH:',req.session.userID)
@@ -53,110 +182,8 @@ const checkSession = (req,res,next) => {
    
 }
 
-app.get('/index',checkSession, (req, res) => {
-  /*   Milestone.find().then(response => {
-        console.log('ALL THE MILESTONE',response)
-    }) */
-    Milestone.find()
-    .then(response => {
-        res.send(JSON.stringify(response))
-        console.log('data loaded')
-    })
-    .catch(err => console.log(err)) 
-  
-   
-    
 
-})
-
-
-
-
-const saveUserCrediential = ((req, res, next) => {
-    /* creating salt and hash to store the token */
-    bcrypt.genSalt(12, (err, salt) => {
-        console.log('creating salt')
-        if (err) {
-            console.log('error creating salt', err)
-        } else {
-            console.log('creating hash')
-            bcrypt.hash(req.body.password, salt, (err, hash) => {
-                if (err) {
-                    console.log('error creating hash', err)
-
-                } else {
-                    console.log('saving data',salt,hash)
-                    
-                    /* data sent from the form the client filled */
-                    const newUser = new User()
-                    newUser.email = req.body.email
-                    newUser.hash = hash
-                    newUser.salt = salt
-                    newUser.save()
-                        .then(response => {
-                            console.log(response)
-                            if (res.statusCode === 200) {
-                                console.log('user signed in successfully')
-                                next()
-                            }
-                        })
-                        .catch(err => {
-                            if (err.code === 11000) {
-                                const credentialErr = { status: 11000, message: 'this account already exists.' }
-                                res.send({ status: 11000, message: 'this account already exists.' })
-                            }
-                        })
-                }
-            })
-        }
-
-    })
-
-
-    
-        
-})
-const saveUserData = ((req, res,next) => {
-    /* data generated to generate the user-data database */
-    const newUserData = new userData()
-    newUserData.email = req.body.email
-    newUserData.nickname = ''
-    newUserData.pictureID = ''
-    newUserData.milestonesIDs = ''
-    newUserData.stonesNumber = 0
-    newUserData.save()
-    .then(response => {
-        
-        if (res.statusCode === 200) {   
-            console.log('user data saved')
-            next()
-        }
-    })
-    .catch(err => {
-        console.log('ERROR GENERATING USER DATA!', err)
-        res.send({ status: 11000, message: 'this account already exists.' })
-    })
-    
-})
-
-
-const logInMiddleware = (req,res,next)=>{
-    User.findOne({email: req.body.email})
-    .then(user => {
-        if(user){
-            req.session.userID = user._id
-            req.session.userEmail = user.email
-            console.log('USER', user._id)
-            
-            next()
-        }else{
-            res.send({status: 11000, message: 'user not found'})
-        }
-    })
-    .catch(err => console.log(err))
-}
-
-app.post('/signin-data',saveUserCrediential,saveUserData,logInMiddleware,(req,res)=>{
+app.post('/signin-data',saveUserCrediential,saveUserData,(req,res)=>{
     console.log(req.body)
     res.send({ status: 200, message: 'Account created' })
 })
@@ -167,11 +194,32 @@ app.post('/login',logInMiddleware,(req, res) => {
 })
 
 app.get('/logout',(req,res)=>{
-    req.session.destroy()
-    console.log('session destroyed')
-    res.send({status: 200, message: 'logged out, redirecting to log in...'})
+    req.session.regenerate( err => {
+        if(err){
+            console.log('error regenerating session',err)
+        }else{
+            console.log('session successfully regenrated')
+            res.send({status: 200, message: 'logged out, redirecting to log in...'})
+        }
+    })
+    
 })
 
+app.get('/index',checkSession, (req, res) => {
+    /*   Milestone.find().then(response => {
+          console.log('ALL THE MILESTONE',response)
+      }) */
+      Milestone.find()
+      .then(response => {
+          res.send(JSON.stringify(response))
+          console.log('data loaded')
+      })
+      .catch(err => console.log(err)) 
+    
+     
+      
+  
+  })
 
 app.post('/new-milestone',(req,res)=>{
     //If the user logged in create a new milestone
