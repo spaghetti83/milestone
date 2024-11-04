@@ -11,11 +11,21 @@
 <body>
         <div class="main" id="main"></div>
        
-       
+        <div class="zoom-container">
+            <div class="zoom-btn" id="zoom-in"><span class="material-symbols-outlined">
+                zoom_in
+                </span></div>
+            <div class="zoom-level-container">
+                <div class="zoom-level" id="zoom-level">0</div>
+            </div>
+            <div class="zoom-btn" id="zoom-out"><span class="material-symbols-outlined">
+                zoom_out
+                </span></div>
+        </div>
         <div class="menu-container">
             <span class="material-symbols-outlined" id="profile" onclick="window.location='/profile.html'">person</span>
-            <span class="material-symbols-outlined" id="main">dashboard</span>
-            <span class="material-symbols-outlined" id="add-page">add_box</span>
+            <span class="material-symbols-outlined" id="main" onclick="window.location.href='/index.html'">dashboard</span>
+            <span class="material-symbols-outlined" id="add-page" onclick="window.location.href='/create-new.html'">add_box</span>
             <span class="material-symbols-outlined" id="milestones">beenhere</span>
         </div>
         <script src="/js/script.js"></script>

@@ -159,6 +159,7 @@ textarea{
 
 .menu-container{  
     position: fixed;
+    z-index: 90;
     background-color: var(--background-default-color);
     bottom: 0px;
     left: 0;
@@ -169,5 +170,5 @@ textarea{
     width: 100%;
     min-width: 300px;
     padding: 15px 0;
-    height: var(--menu-height);
+    
 }

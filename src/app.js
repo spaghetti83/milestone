@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const app = express()
 const cors = require('cors')
+const bcrypt = require('bcrypt')
 const mongoose = require('mongoose')
 const Stone = require('./models/stone.js')
 const Milestone = require('./models/milestone.js')
@@ -71,28 +72,48 @@ app.get('/index',checkSession, (req, res) => {
 
 
 
-const saveUserCrediential = ((req, res,next) => {
-    /* data sent from the form the client filled */
-    const newUser = new User()
-    newUser.email = req.body.email
-    newUser.password = req.body.password
-    console.log(req.body.email, req.body.password)
+const saveUserCrediential = ((req, res, next) => {
+    /* creating salt and hash to store the token */
+    bcrypt.genSalt(12, (err, salt) => {
+        console.log('creating salt')
+        if (err) {
+            console.log('error creating salt', err)
+        } else {
+            console.log('creating hash')
+            bcrypt.hash(req.body.password, salt, (err, hash) => {
+                if (err) {
+                    console.log('error creating hash', err)
 
-    newUser.save()
-        .then(response => {
-            
-            if (res.statusCode === 200) {
-                const credentialResponse = { status: 200, message: 'account created.' }
-                console.log('user signed in successfully')
-                next()
-            }
-        })
-        .catch(err => {
-            if (err.code === 11000) {
-                const credentialErr = { status: 11000, message: 'this account already exists.' }
-                res.send({ status: 11000, message: 'this account already exists.' })
-            }
-        })
+                } else {
+                    console.log('saving data',salt,hash)
+                    
+                    /* data sent from the form the client filled */
+                    const newUser = new User()
+                    newUser.email = req.body.email
+                    newUser.hash = hash
+                    newUser.salt = salt
+                    newUser.save()
+                        .then(response => {
+                            console.log(response)
+                            if (res.statusCode === 200) {
+                                console.log('user signed in successfully')
+                                next()
+                            }
+                        })
+                        .catch(err => {
+                            if (err.code === 11000) {
+                                const credentialErr = { status: 11000, message: 'this account already exists.' }
+                                res.send({ status: 11000, message: 'this account already exists.' })
+                            }
+                        })
+                }
+            })
+        }
+
+    })
+
+
+    
         
 })
 const saveUserData = ((req, res,next) => {
@@ -103,12 +124,10 @@ const saveUserData = ((req, res,next) => {
     newUserData.pictureID = ''
     newUserData.milestonesIDs = ''
     newUserData.stonesNumber = 0
-
     newUserData.save()
     .then(response => {
         
-        if (res.statusCode === 200) {
-            response = { status: 200, message: 'user data created.' }
+        if (res.statusCode === 200) {   
             console.log('user data saved')
             next()
         }
@@ -120,26 +139,30 @@ const saveUserData = ((req, res,next) => {
     
 })
 
-app.post('/signin-data',saveUserCrediential,saveUserData,(req,res)=>{
-    console.log(req.body)
-    res.send({ status: 200, message: 'Account created' })
 
-})
-
-
-app.post('/login', (req, res) => {
+const logInMiddleware = (req,res,next)=>{
     User.findOne({email: req.body.email})
     .then(user => {
         if(user){
             req.session.userID = user._id
             req.session.userEmail = user.email
             console.log('USER', user._id)
-            res.send({ status: 200, message: 'user found' })
+            
+            next()
         }else{
             res.send({status: 11000, message: 'user not found'})
         }
     })
     .catch(err => console.log(err))
+}
+
+app.post('/signin-data',saveUserCrediential,saveUserData,logInMiddleware,(req,res)=>{
+    console.log(req.body)
+    res.send({ status: 200, message: 'Account created' })
+})
+
+app.post('/login',logInMiddleware,(req, res) => {
+    res.send({ status: 200, message: 'user found' })
 
 })
 

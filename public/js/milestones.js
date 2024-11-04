@@ -38,7 +38,11 @@ fetch(form.action,{
     body: JSON.stringify({title: title.value, description: description.value, year: year.value, color: colorSelected })
 })
 .then( response => response.json())
-.then(data => console.log(data))
+.then(data => {
+    console.log(data)
+    
+    window.location.href = '/'
+})
 .catch(err => console.log(err))
 })
 ///////////////////////////////////////////////////////

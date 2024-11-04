@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
+    <title>Profile Setting</title>
+</head>
+<body>
+    <div class="box-container">
+        <div class="main-container">
+            <div id="response-message"></div>
+            <div class="btn-container">
+                
+                <button class="primary" onclick="window.location.href='/newmilestone.html'"><span class="primary-ico-btn"></span>New Milestone</button>
+                <button class="add" onclick="window.location.href='/newstone.html'"><span class="add-ico-btn"></span>New Stone</button>
+            </div>
+        </div>
+    </div>
+    <div class="menu-container">
+        <span class="material-symbols-outlined" id="profile" onclick="window.location='/profile.html'">person</span>
+        <span class="material-symbols-outlined" id="main" onclick="window.location.href='/index.html'">dashboard</span>
+        <span class="material-symbols-outlined" id="add-page" onclick="window.location.href='/create-new.html'">add_box</span>
+        <span class="material-symbols-outlined" id="milestones">beenhere</span>
+    </div>
+    <script src="/js/profile.js"></script>
+</body>
+</html>

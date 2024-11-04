@@ -10,13 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/spaghetti83/milestone.git"
   },
-  "author": "",
+  "author": "Marco Carbonetti",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/spaghetti83/milestone/issues"
   },
   "homepage": "https://github.com/spaghetti83/milestone#readme",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "connect-mongodb-session": "^5.0.0",
     "cors": "^2.8.5",
     "express": "^4.21.1",

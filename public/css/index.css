@@ -39,6 +39,19 @@ body{
     align-content: center;
     box-sizing:content-box
 }
+
+.zoom-container{
+    background-color:#EBEDF0;
+    border: solid #8f8f8f;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 80px;
+    right: 2px;
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+}
+
 .menu-container{  
     position: fixed;
     z-index: 90;

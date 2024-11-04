@@ -119,6 +119,22 @@ button {
     margin: 10px 0;
     
 }
+.color-container{
+    max-width: 200px;
+    max-width: 500px;
+    border-radius: 12px;
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.color-btn{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+   /*  box-shadow: 0 0 10px 0px var(--default-shadow-color); */
+}
 
 .add {
     background-color: var(--add-btn-color);

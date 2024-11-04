@@ -7,6 +7,55 @@ const googleFontLogo = 'beenhere'
 
 
 
+ /* changing this value you change the size in length of every year
+    in the timeline, basicly you can zoom in and out incresing o decresing it */
+    let zoomLevel = 1///LET IT AT 1 (ONE)
+/////////////ZOOMS SETTTING STARTS HERE/////////////////////
+const zoomIn = document.getElementById('zoom-in')
+const zoomOut = document.getElementById('zoom-out')
+const zoomLevelDisplay = document.getElementById('zoom-level')
+zoomLevelDisplay.innerHTML = zoomLevel
+zoomOut.addEventListener('click',()=>{
+  if(zoomLevel <= 5){
+  zoomLevel = zoomLevel + 0.5
+  }
+  zoomLevelSettings()
+})
+zoomIn.addEventListener('click',()=>{
+  if(zoomLevel >= 0.5){
+  zoomLevel = zoomLevel - 0.5
+  }
+  zoomLevelSettings()
+})
+
+const zoomLevelSettings = ()=>{
+  
+  if(zoomLevel >= 5){
+    zoomLevel = 5
+    zoomOut.style.color = '#8f8f8f'
+  }else{
+     zoomIn.style.color = 'black'
+  }
+  if(zoomLevel <= 0.5){
+    zoomLevel = 0.5
+    zoomIn.style.color = '#8f8f8f'
+  }else{
+    zoomOut.style.color = 'black'
+  }
+  zoomLevelDisplay.innerHTML = zoomLevel
+  body.innerHTML = ''
+  createUserMilestone()
+}
+/////////////ZOOMS SETTTING ENDS HERE/////////////////////
+
+
+
+
+
+
+
+
+
 
 /*  fetchUserData fill milestoneData with the milestone's user data */
   
@@ -23,6 +72,9 @@ const fetchMilestoneData = ()=>{
     
     userMilestones = data
     console.log('feching milestone User data',userMilestones)
+    if(data.status === 11000){
+      window.location.href = '/login.html'
+    }else{
     userMilestones.forEach(el =>{
       
       el.stones.forEach(el => {
@@ -33,6 +85,7 @@ const fetchMilestoneData = ()=>{
     })
     createUserMilestone()
     console.log('milestoneData',milestoneData)
+  }
   })
   .catch(err => console.log('Error fetching Milestones', err))
 }
@@ -92,10 +145,7 @@ const createUserMilestone = () => {
       return daysTillToday
 
     }
-    /* changing this value you change the size in length of every year
-    in the timeline, basicly you can zoom in and out incresing o decresing it */
-    let zoomLevel = 1///LET IT AT 1 (ONE)
-
+   
 
     const t = new Date()
     const tY = t.getFullYear()
