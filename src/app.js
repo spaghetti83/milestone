@@ -46,6 +46,7 @@ const checkSession = (req,res,next) => {
         next()
     }else{
         res.send({status: 11000, message: 'no session found, log-in before'})
+        //res.redirect('/login.html')
     }
  
    
@@ -57,9 +58,8 @@ app.get('/index',checkSession, (req, res) => {
     }) */
     Milestone.find()
     .then(response => {
-        console.log('got data', response)
         res.send(JSON.stringify(response))
-        
+        console.log('data loaded')
     })
     .catch(err => console.log(err)) 
   
@@ -145,10 +145,8 @@ app.post('/login', (req, res) => {
 
 app.get('/logout',(req,res)=>{
     req.session.destroy()
-   console.log('session destroyed')
-   res.redirect('/login.html')
-   
-    
+    console.log('session destroyed')
+    res.send({status: 200, message: 'logged out, redirecting to log in...'})
 })
 
 
@@ -176,6 +174,8 @@ app.post('/new-milestone',(req,res)=>{
     ///res.send({message: req.body} )
 })
 
+
+
 app.post('/new-stone', (req,res)=> {
     const addNewStone = {
         date: req.body.date,
@@ -190,10 +190,14 @@ app.post('/new-stone', (req,res)=> {
         req.body.milestoneID,
         { $push: {stones: addNewStone}},
         {new: true}
-    ).then(response => console.log(response))
-    .catch(err => console.log(err))
-
-
+    ).then(response => {
+        next()
+    })
+    .catch(err => {
+        console.log(err)
+        res.redirect('/newstone.html')
+    })
+   
 })
 
 app.listen(5000, () => {

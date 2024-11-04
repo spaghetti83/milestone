@@ -45,7 +45,10 @@ const fetchMilestoneData = ()=>{
             milestoneID: selectInput.value })
     })
     .then(response => response.json)
-    .then(data => console.log(data))
+    .then(data => {
+      console.log(data)
+      window.location.href = '/'
+    })
     .catch(err => console.log(err))
   })
 

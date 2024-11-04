@@ -1,29 +1,21 @@
-const form = document.getElementById('login-form')
+const logoutBtn = document.getElementById('log-out')
 
-form.addEventListener('submit',(event)=>{
-event.preventDefault()
-const email = document.getElementById('email')
-const password = document.getElementById('password')    
-
-fetch(form.action,{
-    method: form.method,
-    headers: {  'Content-Type' : 'application/json'},
-    body: JSON.stringify({email: email.value, password: password.value})
+logoutBtn.addEventListener('click',()=>{
+    fetch('/logout',{
+        method: 'GET',
+        headers: {'Content-Type':'application/json'}
+    }).then(response => response.json())
+    .then(data => {
+        responseMessage(data.status,data.message)
+       
+    })
+    .catch(err => console.log(err))
 })
-.then(response => response.json())
-.then(data => {
-    responseMessage(data.status,data.message)
-    console.log(data.status, data.message)
-})
-.catch(err => console.log('something went wrong!',err))
-})
-
 
 const responseMessage = (response,message)=> {
     const responseContainer = document.getElementById('response-message')
     switch (response) {
-        case 11000:
-            
+        case 200:
             responseContainer.innerHTML = message
             responseContainer.style.display = 'flex'
             responseContainer.style.justifyContent = 'center'
@@ -35,13 +27,13 @@ const responseMessage = (response,message)=> {
             responseContainer.style.marginTop = '10px'
             responseContainer.style.minWidth = '300px'
             setTimeout(()=>{
-                responseContainer.innerHTML = '...wait, redirecting to the sign-in page'
+                responseContainer.innerHTML = '...wait, redirecting to the log-in page'
                 setTimeout(()=>{
                     window.location.href = '/login.html'
                 },2000)
             },2000)
             break;
-        case 200:
+        case 11000:
             responseContainer.innerHTML = message
             responseContainer.style.display = 'flex'
             responseContainer.style.justifyContent = 'center'
@@ -55,7 +47,7 @@ const responseMessage = (response,message)=> {
             setTimeout(()=>{
                 responseContainer.innerHTML = '...wait, redirecting to the dashboard'
                 setTimeout(()=>{
-                    window.location.href = '/'
+                    window.location.href = '/login.html'
                 },2000)
             },2000)
             
@@ -65,4 +57,3 @@ const responseMessage = (response,message)=> {
     }
     
 }
-
