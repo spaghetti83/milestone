@@ -69,20 +69,21 @@ body{
 }
 
 .main-container{
-    margin-top: 20px;
-   
+    margin-top: 25px;
+    
 }
 
 .label-container{
-    width: 90%;
+    width: 100%;
     margin: auto;
-    
+    margin-top: 10px;
 }
 .title{
     font-size: larger;
     font-weight: bolder;
     text-shadow: 0px 3px 5px var(--default-shadow-color);
 }
+
 .declaimer-password{
     
     font-size: smaller;
@@ -90,9 +91,9 @@ body{
     text-align: center;
 }
 .input-container{
-    width: 90%;
+    width: 100%;
     margin: auto;
-   
+    position: relative;
 }
 
 input{
@@ -100,9 +101,16 @@ input{
     border-radius: var(--default-border-radius);
     border: 0.1px solid var(--default-disabled-text);
     min-height: 30px;
-   
+    
 }
-
+.length-counter{
+    position:absolute;
+    top: 50%;
+    right: 10px;
+    transform: translate( 0,-50%);
+    color: #8f8f8f;
+    text-align: end;
+}
 
 .btn-container{
     display: flex;
@@ -136,7 +144,7 @@ button {
 }
 .disabled{
     background-color: var(--disabled-btn-color);
-    color: #8f8f8f;
+    color: #3b3a3a;
 }
 
 

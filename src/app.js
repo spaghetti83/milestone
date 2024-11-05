@@ -16,9 +16,6 @@ app.use(express.json())
 app.use(express.urlencoded()) //decode forms data
 app.use(express.static(path.join(__dirname, '../public')))
 
-console.log(path.join(__dirname, '../public/', 'index.html'))
-
-
 //CONNECTIONO TO THE DATABASE
 const dbURI = 'mongodb+srv://spaghetto:1234@sandbox.szx8f.mongodb.net/?retryWrites=true&w=majority&appName=sandbox'
 mongoose.connect(dbURI)
