@@ -10,9 +10,9 @@ let milestonesData = {}
 let milestonesList = []
 
 
-
+/* CHANGE THIS TO FILTER ONLY USER MILESTONES BEFORE ADDING A STONE */
 const fetchMilestoneData = ()=>{
-    fetch('/index',{
+    fetch('/find-userdata',{
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     })
@@ -25,7 +25,6 @@ const fetchMilestoneData = ()=>{
         selectInput.add(newOption)
       }
       
-      console.log('FETCHING MILESTONES FOR SELECT ELEMENT')
     })
     .catch(err => console.log('Error fetching Milestones', err))
   }

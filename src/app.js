@@ -41,11 +41,8 @@ app.use(session({
 
 
 
-
-
-
-
 const saveUserCrediential = ((req, res, next) => {
+    /* session regeneration */
     req.session.regenerate(err => {
         if (err) {
             console.log('error regenerating session', err)
@@ -69,7 +66,7 @@ const saveUserCrediential = ((req, res, next) => {
                 } else {
                     console.log('saving data', salt, hash)
 
-                    /* data sent from the form the client filled */
+                    /* data sent from the form the client has filled */
                     const newUser = new User()
                     newUser.email = req.body.email
                     newUser.hash = hash
@@ -80,6 +77,7 @@ const saveUserCrediential = ((req, res, next) => {
                             if (res.statusCode === 200) {
                                 console.log('user signed in successfully')
                                 ////////////////////////
+                                /* log-in before user-data has been saved */
                                 console.log('logging in:', req.body.email)
                                 console.log('session:', req.session)
                                 User.findOne({ email: req.body.email })
@@ -126,11 +124,20 @@ const logInMiddleware = (req,res,next)=>{
     .then(user => {
         console.log('user value', user)
         if(user){
-            req.session.userID = user._id
-            req.session.userEmail = user.email
-            console.log('USER', user._id)
+            bcrypt.compare(req.body.password, user.hash, (err, match) => {
+                if (match) {
+                    req.session.userID = user._id
+                    req.session.userEmail = user.email
+                    console.log('USER', user._id)
+                    next()
+                } else {
+                    console.log('error from login',err)
+                    res.send({ status: 401, message: 'email or password incorrect' })
+                }
+            })
             
-            next()
+            
+            
         }else{
             console.log('user not found')
             res.send({status: 11000, message: 'user not found'})
@@ -141,7 +148,7 @@ const logInMiddleware = (req,res,next)=>{
 
 
 const saveUserData = ((req, res, next) => {
-    /* data generated to generate the user-data database */
+    /* generate data for the user-data database */
     console.log('body datas', req.body)
     const newUserData = new userData()
     newUserData.email = req.body.email
@@ -151,7 +158,6 @@ const saveUserData = ((req, res, next) => {
     newUserData.stonesNumber = 0
     newUserData.save()
         .then(response => {
-
 
             console.log('user data saved')
             next()
@@ -171,12 +177,10 @@ const saveUserData = ((req, res, next) => {
 const checkSession = (req,res,next) => {
     console.log('CHECK MATCH:',req.session.userID)
     if (req.session.userID){
-        //res.send({status:200, message: 'session found'})
         console.log('session found')
         next()
     }else{
         res.send({status: 11000, message: 'no session found, log-in before'})
-        //res.redirect('/login.html')
     }
  
    
@@ -190,7 +194,6 @@ app.post('/signin-data',saveUserCrediential,saveUserData,(req,res)=>{
 
 app.post('/login',logInMiddleware,(req, res) => {
     res.send({ status: 200, message: 'user found' })
-
 })
 
 app.get('/logout',(req,res)=>{
@@ -206,13 +209,11 @@ app.get('/logout',(req,res)=>{
 })
 
 app.get('/index',checkSession, (req, res) => {
-    /*   Milestone.find().then(response => {
-          console.log('ALL THE MILESTONE',response)
-      }) */
+    
       Milestone.find()
       .then(response => {
           res.send(JSON.stringify(response))
-          console.log('data loaded')
+          console.log('all data loaded')
       })
       .catch(err => console.log(err)) 
     
@@ -236,7 +237,7 @@ app.post('/new-milestone',(req,res)=>{
             User.findOne({_id: response.ownerID})
                 .then(response => console.log(response))
                 .catch(err => console.log(err))
-            
+            res.send(response)
         })
         .catch(err => console.log(err))
     }else{
@@ -245,7 +246,15 @@ app.post('/new-milestone',(req,res)=>{
     ///res.send({message: req.body} )
 })
 
-
+app.get('/find-userdata',(req,res)=>{
+    console.log('session data',req.session.userID)
+    Milestone.find({ownerID: req.session.userID})
+    .then(milestones => {
+       res.send(JSON.stringify(milestones))
+       console.log('only USER data loaded', milestones)
+    })
+    .catch(err => console.log(err))
+})
 
 app.post('/new-stone', (req,res)=> {
     const addNewStone = {

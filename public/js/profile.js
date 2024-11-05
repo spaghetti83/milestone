@@ -1,5 +1,7 @@
 const logoutBtn = document.getElementById('log-out')
 
+
+
 logoutBtn.addEventListener('click',()=>{
     fetch('/logout',{
         method: 'GET',

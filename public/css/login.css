@@ -140,7 +140,11 @@ button {
     color: #8f8f8f;
 }
 
-
+.link{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
 
 .menu-container{  
     position: fixed;
