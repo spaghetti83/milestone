@@ -173,6 +173,9 @@ const saveUserData = ((req, res, next) => {
 //CHECK FOR SESSIONS WITH EXPRESS.SESSION
 const checkSession = (req,res,next) => {
     console.log('CHECK MATCH:',req.session.userID)
+    if (req.session.userID === undefined){
+        res.send({status: 500, message: 'no session found, log-in before'})
+    }
     if (req.session.userID){
         console.log('session found')
         next()
@@ -204,6 +207,10 @@ app.get('/logout',(req,res)=>{
     })
     
 })
+
+app.get('/check-session',checkSession,(req,res)=>{
+    res.send({status: 'checkOK', message: req.session.userEmail})
+})  
 
 app.get('/index',checkSession, (req, res) => {
     

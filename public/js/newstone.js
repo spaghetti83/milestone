@@ -5,6 +5,7 @@ const title = document.getElementById('title')
 const eventDescription = document.getElementById('event')
 const eventDate = document.getElementById('event-date')
 const addBtn = document.getElementById('add-btn')
+const responseMessage = document.getElementById('response-message')
 
 let milestonesData = {}
 let milestonesList = []
@@ -18,13 +19,16 @@ const fetchMilestoneData = ()=>{
     })
     .then( response => response.json())
     .then( data => {
+      if(data.length === 0){
+          window.location.href = '/newmilestone.html'
+      }else{
       for (let i = 0; i < data.length; i++) {
         let newOption = document.createElement('option')
         newOption.value = data[i]._id
         newOption.text = data[i].name
         selectInput.add(newOption)
       }
-      
+    }
     })
     .catch(err => console.log('Error fetching Milestones', err))
   }
