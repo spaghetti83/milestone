@@ -10,12 +10,16 @@ const User = require('./models/new-user.js')
 const userData = require('./models/user-data.js')
 const session = require('express-session')
 const MongoDbStore = require('connect-mongodb-session')(session)
+const ejs = require('ejs')
 
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded()) //decode forms data
 app.use(express.static(path.join(__dirname, '../public')))
-
+/* setting EJS */
+app.set('stone-post','./view/stone-post.ejs')
+app.set('view engine','ejs')
+///////////////////////////
 //CONNECTIONO TO THE DATABASE
 const dbURI = 'mongodb+srv://spaghetto:1234@sandbox.szx8f.mongodb.net/?retryWrites=true&w=majority&appName=sandbox'
 mongoose.connect(dbURI)
@@ -177,7 +181,7 @@ const checkSession = (req,res,next) => {
         res.send({status: 500, message: 'no session found, log-in before'})
     }
     if (req.session.userID){
-        console.log('session found')
+        console.log('session found',req.session.userID)
         next()
     }else{
         res.send({status: 11000, message: 'no session found, log-in before'})
@@ -260,28 +264,34 @@ app.get('/find-userdata',(req,res)=>{
     .catch(err => console.log(err))
 })
 
-app.post('/new-stone', (req,res)=> {
+app.post('/new-stone', checkSession,(req,res)=> {
     const addNewStone = {
         date: req.body.date,
         event: req.body.event,
         title: req.body.title,
-        milestoneID: req.body.milestoneID
+        milestoneID: req.body.milestoneID,
+        userID: req.session.userID
     }
     console.log(addNewStone)
-    console.log('Milestone ID', req.body.id)
+    console.log('Milestone ID', req.body.milestoneID)
     //Milestone.findOne({id: req.body.id})
     Milestone.findByIdAndUpdate(
         req.body.milestoneID,
         { $push: {stones: addNewStone}},
         {new: true}
     ).then(response => {
-        next()
+       res.send(response)
     })
     .catch(err => {
         console.log(err)
         res.redirect('/newstone.html')
     })
    
+})
+/* PROBLEMS!! >:( */
+app.post('/view-stone',(req,res)=> {
+    console.log(req.body)
+    res.render('stone-post',req.body)
 })
 
 app.listen(5000, () => {

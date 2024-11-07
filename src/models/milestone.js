@@ -42,6 +42,10 @@ const milestoneDataSchema = new Schema({
         milestoneID: {
             type: String,
             required: true
+        },
+        userID: {
+            type: String,
+            required: true
         }
     }],
     stonesNumbers: {

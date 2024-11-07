@@ -1,6 +1,7 @@
 const logoutBtn = document.getElementById('log-out')
 const addPage = document.getElementById('add-page')
 const profile = document.getElementById('profile')
+
 logoutBtn.addEventListener('click',()=>{
     fetch('/logout',{
         method: 'GET',

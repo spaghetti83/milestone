@@ -49,14 +49,6 @@ const zoomLevelSettings = ()=>{
 /////////////ZOOMS SETTTING ENDS HERE/////////////////////
 
 
-
-
-
-
-
-
-
-
 /*  fetchUserData fill milestoneData with the milestone's user data */
   
 
@@ -233,6 +225,7 @@ const createUserMilestone = () => {
           tempLabel.style.cursor = 'pointer'
           tempLabel.style.zIndex = 9
         })
+      
         timelineNode.appendChild(tempDiv)
         ///////////////////////////////////////////////////
         /* label creation */
@@ -248,7 +241,23 @@ const createUserMilestone = () => {
         tempLabel.style.zIndex = index
         //let zInd = ''
         tempLabel.innerHTML = strLabelStone
-
+        ///button to show the stone content
+        tempDiv.addEventListener('click',()=>{
+          console.log(el)
+          fetch('/view-stone',{
+            method: 'POST',
+            headers: { 'Content-Type':'application/json'},
+            body: JSON.stringify(el)
+          }).then(response =>{ 
+            if(response.ok){
+              console.log(response)
+              window.location.href = '/view-stone'
+            }
+            
+          })
+          .catch( err => console.log(err))
+          
+        })
         //console.log(el.event)
         timelineNode.append(tempLabel)
         ///////////////////////////////////////////////////

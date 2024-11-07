@@ -45,7 +45,8 @@ const fetchMilestoneData = ()=>{
             title: title.value, 
             event: eventDescription.value, 
             date: eventDate.value, 
-            milestoneID: selectInput.value })
+            milestoneID: selectInput.value,
+          })
     })
     .then(response => response.json)
     .then(data => {
