@@ -243,17 +243,23 @@ const createUserMilestone = () => {
         tempLabel.innerHTML = strLabelStone
         ///button to show the stone content
         tempDiv.addEventListener('click',()=>{
-          console.log(el)
           fetch('/view-stone',{
             method: 'POST',
             headers: { 'Content-Type':'application/json'},
             body: JSON.stringify(el)
           }).then(response =>{ 
             if(response.ok){
-              console.log(response)
-              window.location.href = '/view-stone'
+              console.log('got data from fetch',response)
+              return response.text()
+              
             }
             
+          })
+          .then(html => {
+            localStorage.setItem('stonePostCode',html)
+            const str = localStorage.getItem('stonePostCode')
+            console.log(str)
+            window.location.href = '/stone-post.html'
           })
           .catch( err => console.log(err))
           

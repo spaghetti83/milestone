@@ -289,10 +289,13 @@ app.post('/new-stone', checkSession,(req,res)=> {
    
 })
 /* PROBLEMS!! >:( */
-app.post('/view-stone',(req,res)=> {
-    console.log(req.body)
-    res.render('stone-post',req.body)
-})
+app.route('/view-stone')
+    .post((req,res)=> {
+        console.log('post',req.body)
+        res.render('stone-post',req.body)
+    })
+
+
 
 app.listen(5000, () => {
     try {

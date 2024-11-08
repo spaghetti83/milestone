@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap');
+:root{
+    font-family: "Afacad Flux", sans-serif;
+    --add-btn-color: #00C7BE;
+    --cancel-btn-color: #FF2D55;
+    --primary-btn-color: #32ADE6;
+    --disabled-btn-color: #EBEDF0;
+
+    --background-default-color: #F5F5F5;
+    --default-shadow-color: #8f8f8f;
+    --default-disabled-text: #8f8f8f;
+
+    --default-border-radius: 4px;
+    --milestone-border-radius: 12px
+
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+
+body{
+    background-color: var(--background-default-color) ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.div-spacer {
+    min-height: 100px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+.box-container{
+    background-color: var(--background-default-color);
+    border-radius: 12px;
+    box-shadow: 0px 0px 8px var(--default-shadow-color);
+    min-width: 300px;
+    height: auto;
+    margin: 15px 0px;
+    padding: 10px 5px;
+   
+}
+
+.label-container{
+    width: 90%;
+    margin: auto;
+    
+}
+.title{
+    font-size: larger;
+    font-weight: bolder;
+    text-shadow: 0px 3px 5px var(--default-shadow-color);
+}
+.sub-title{
+    font-weight: bolder;
+}
+.milestone{
+    font-style: italic;
+    font-size: smaller;
+}
+
+.input-container{
+    width: 90%;
+    margin: auto;
+   
+}
+
+/* inserire un div per creare i bordi e fare lo spazio per l'icona */
+input {
+    width: 100%;
+    border-radius: var(--default-border-radius);
+    border: 0.1px solid var(--default-disabled-text);
+    min-height: 30px;
+   
+}
+select{
+    width: 100%;
+    border-radius: var(--default-border-radius);
+    border: 0.1px solid var(--default-disabled-text);
+    margin-left: 10px;
+    max-width: 90%
+    
+}
+textarea{
+    width: 90%;
+    border-radius: var(--default-border-radius);
+    border: 0.1px solid var(--default-disabled-text);
+    box-shadow: var(--default-shadow-color);
+    min-height: 30px;
+}
+
+.btn-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: space-around;
+    min-width: 300px;
+    min-height: 100px;
+}
+button {
+    min-width: 250px ;
+    min-height: 40px;
+    border: none;
+    border-radius: var(--default-border-radius);
+    box-shadow: 0px 0px 4px var(--default-shadow-color);
+    color: var(--background-default-color);
+    font-family: "Afacad Flux", sans-serif;
+    margin: 20px 0px;
+}
+.add {
+    background-color: var(--add-btn-color);
+}
+.cancel{
+    background-color: var(--cancel-btn-color);
+}
+.primary{
+    background-color: var(--primary-btn-color);
+}
+.disabled{
+    background-color: var(--disabled-btn-color);
+    color: #8f8f8f;
+}
+
+/* MILESTONE CONTAINER */
+
+.milestone-container{
+    position: relative;
+    box-sizing: border-box;
+    max-width: 300px;
+    height: auto;
+    background-color: #A6D4FF ;
+    border-radius: var(--milestone-border-radius);
+    margin: 10px;
+    box-shadow: 0 0 8px var(--default-shadow-color);
+    padding: 10px;
+    z-index: 10;
+}
+
+.milestone-header{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+.picture{
+  margin: 0;
+}
+.user-pic{
+   clip-path: circle(40%);
+   width: 80px;
+}
+.milestone-mask{
+    background-color: var(--background-default-color);
+    min-width: 100%;
+    min-height: 100px;
+    border-radius: var(--milestone-border-radius);
+    
+    
+}
+/* ---------------- */
+.menu-container{  
+    border-radius: 12px 12px 0 0 ;
+    box-shadow: 0px 0px 8px var(--default-shadow-color);
+    height: auto;
+    margin: 15px 0px;
+    padding: 10px 10px;
+    
+    display: flex;
+    justify-content: space-around;
+}
+.tools{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    background-color: #00C7BE;
+}
