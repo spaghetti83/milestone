@@ -193,11 +193,24 @@ let idCount = 0
     }
     
    })
+
    container.addEventListener('touchmove',(e)=>{
     
-    if(e.touches.length === 2){{
+    if(e.touches.length === 2){
       e.preventDefault()
+      
+  
+      
     }
+    
+   })
+
+
+
+
+
+
+   
   })
   
   
