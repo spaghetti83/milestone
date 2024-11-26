@@ -87,6 +87,7 @@ let idCount = 0
     textElement.textContent = 'double tap to edit'
     textElement.style.width = '1fr'
     //textElement.style.zIndex = '100' + idCount
+    textElement.style.transform = 'scale(1)'
     console.log(textElement)
     container.appendChild(textElement)
     //
@@ -147,21 +148,27 @@ let idCount = 0
 //////////////////////////////////////
 ////PINCH TO ZOOM////////////////////
 ////////////////////////////////////
-    let firstTouch,secondTouch
+    let firstTouch = 0
+    let secondTouch = 0
+    let seconTouchMoving = 0
     let startingDistance = 0
     let currentDistance = 0
     let scaleFactor = 1
-    
+    let lastScaleFactor = 0
     let lastTap = 0
    
    textElement.addEventListener('touchstart',(e)=>{
-    //e.preventDefault()
-    if(e.touches.length === 2){
+    
+    /* if(e.touches.length === 2){
       e.preventDefault()
       firstTouch = Math.round(e.touches[0].clientX - e.touches[1].clientX)
-      secondTouch = e.touches[0].clientY - e.touches[1].clientY
-      startingDistance = Math.round(Math.hypot(firstTouch,secondTouch))
-    }
+      //secondTouch = e.touches[0].clientY - e.touches[1].clientY
+      //startingDistance = Math.round(Math.hypot(firstTouch,secondTouch))
+    } */
+
+      
+
+
     //DOUBLE TAP TO EDIT
     if(e.touches.length === 1){
     const currentTime = new Date().getTime()
@@ -184,30 +191,55 @@ let idCount = 0
     
     if(e.touches.length === 2){
       e.preventDefault()
+      /* secondTouch = Math.round(e.touches[0].clientY - e.touches[1].clientY)
+      currentDistance = Math.round(Math.hypot(firstTouch,secondTouch))
+      
+      scaleFactor =currentDistance / startingDistance
+      textElement.style.transform = `scale(${scaleFactor})`
+      output.textContent = firstTouch + '|' + secondTouch + '|' +  scaleFactor */
+    }
+    
+   })
+
+   container.addEventListener('touchstart',(e)=>{
+    if(e.touches.length === 2){
+      e.preventDefault()
+      firstTouch = Math.abs(Math.round(e.touches[0].clientX - e.touches[1].clientX))
+      secondTouch = Math.abs(Math.round(e.touches[0].clientY - e.touches[1].clientY))
+      //startingDistance = Math.round(Math.hypot(firstTouch,secondTouch))
+      output.textContent = firstTouch + '|' + secondTouch
+    }
+   })
+
+
+   container.addEventListener('touchmove',(e)=>{
+    
+    /* if(e.touches.length === 2){
+      e.preventDefault()
       secondTouch = Math.round(e.touches[0].clientY - e.touches[1].clientY)
       currentDistance = Math.round(Math.hypot(firstTouch,secondTouch))
       scaleFactor =currentDistance / startingDistance
       textElement.style.transform = `scale(${scaleFactor})`
   
-      
-    }
-    
-   })
+    } */
 
-   container.addEventListener('touchmove',(e)=>{
-    
     if(e.touches.length === 2){
       e.preventDefault()
+      seconTouchMoving = Math.abs(Math.round(e.touches[0].clientY - e.touches[1].clientY))
+      let diffrenceSecond =  seconTouchMoving - secondTouch
+      scaleFactor = (diffrenceSecond / seconTouchMoving) + lastScaleFactor
       
-  
+        textElement.style.transform = `scale(${scaleFactor})`
       
+      
+      output.textContent = output.textContent =  ((diffrenceSecond / seconTouchMoving) + lastScaleFactor)
     }
     
    })
 
-
-
-
+   container.addEventListener('touchend',(e)=>{
+      lastScaleFactor = scaleFactor
+   })
 
 
    
