@@ -1,4 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap');
+/* FONT TO CHOOSE FROM IN THE POST */
+/* COLORFUL */
+/* Nabla */
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Nabla:EDPT,EHLT@0..200,0..24&display=swap');
+/* Bungee Spice */
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:slnt,wght@-14..14,100..1000&family=Bungee+Spice&family=Nabla:EDPT,EHLT@0..200,0..24&display=swap');
+/* Honk */
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:slnt,wght@-14..14,100..1000&family=Bungee+Spice&family=Honk:MORF,SHLN@0..45,0..100&family=Nabla:EDPT,EHLT@0..200,0..24&family=Noto+Color+Emoji&display=swap');
+/* HANDWRITTEN */
+/* Amatic SC */
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:slnt,wght@-14..14,100..1000&family=Amatic+SC:wght@400;700&family=Bungee+Spice&family=Honk:MORF,SHLN@0..45,0..100&family=Nabla:EDPT,EHLT@0..200,0..24&family=Noto+Color+Emoji&display=swap');
+/* Gochi Hand */
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:slnt,wght@-14..14,100..1000&family=Amatic+SC:wght@400;700&family=Bungee+Spice&family=Gochi+Hand&family=Honk:MORF,SHLN@0..45,0..100&family=Nabla:EDPT,EHLT@0..200,0..24&family=Noto+Color+Emoji&display=swap');
+/* ---------------------------------- */
+/* REGULAR */
+/* Roboto */
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:slnt,wght@-14..14,100..1000&family=Amatic+SC:wght@400;700&family=Bungee+Spice&family=Gochi+Hand&family=Honk:MORF,SHLN@0..45,0..100&family=Nabla:EDPT,EHLT@0..200,0..24&family=Noto+Color+Emoji&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+/* Cormorant Infant */
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:slnt,wght@-14..14,100..1000&family=Amatic+SC:wght@400;700&family=Bungee+Spice&family=Cormorant+Infant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Gochi+Hand&family=Honk:MORF,SHLN@0..45,0..100&family=Nabla:EDPT,EHLT@0..200,0..24&family=Noto+Color+Emoji&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 :root{
     font-family: "Afacad Flux", sans-serif;
     --add-btn-color: #00C7BE;
@@ -24,6 +44,7 @@
 }
 .material-symbols-outlined:hover {
     cursor: pointer;
+    user-select: none
 }
 
 

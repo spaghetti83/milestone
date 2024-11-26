@@ -10,68 +10,88 @@
 </head>
 <body>
     <!-- NEW MILESTONE FORM -->
-    <div class="form-container">
+    <div class="form-container" id="form-container">
         <form action="/new-stone" method="POST" id="form-new-stone">
-            <div class="box-container">
-                <div class="main-container">
-                    <div class="label-container">
-                        <div class="title">Select the Milestone</div>
-                        <div class="sub-title">add an achivement to your timeline</div>
-                    </div>
-                    <div class="input-container">
-                        <select id="milestones-selection">
-                            <!-- the script add the options -->
-                        </select>
-                    </div>
-                </div>
-            </div>
-    
-            <div class="main-container">
-                <div class="label-container">
-                    <div class="title">Title</div>
-                    <div class="sub-title">give a title to this event</div>
-                </div>
-                <div class="input-container">
-                    <input type="text" class="text-input" id="title">
-                </div>
-            </div>
 
-            <div class="main-container">
-                <div class="label-container">
-                    <div class="title">Event</div>
-                    <div class="sub-title">describe the event occurred</div>
+            
+
+                <div class="box-container">
+                    <div class="box-setting">
+                        <div class="label-container">
+                            <div class="title">Post on</div>
+                        </div>
+                        <div class="input-container">
+                            <select id="milestones-selection">
+                                <!-- the script add the options -->
+                            </select>
+                        </div>
+                        <div class="label-container">
+                            <div class="title">Date</div>
+                        </div>
+                        <div class="input-container">
+                            <input type="date" class="text-input" id="event-date">
+                        </div>
+                    </div>
+
+                    <div class="main-container">
+                        <div class="input-container">
+                            <div class="post-tools-container" id="post-tools-container">
+                                <div class="input-container">
+                                    <input type="text" class="text-input" id="title" placeholder="Title">
+                                </div>
+                                <div class="tools"> 
+                                    <div id="post-text"><span class="material-symbols-outlined">
+                                            insert_text
+                                        </span></div>
+                                    <div id="post-draw"><span class="material-symbols-outlined">
+                                            draw
+                                        </span></div>
+                                    <div id="post-sticker"><span class="material-symbols-outlined">
+                                            ar_stickers
+                                        </span></div>
+                                </div>
+
+                                
+                            </div>
+                            <div id="output">output</div>
+                            <div id="response-message"></div>
+
+
+
+
+                            <!-- <textarea name="comments" id="event" class="text-input" name="event"></textarea> -->
+
+                        </div>
+
+
+                    </div>
                 </div>
-                <div class="input-container">
-                    <textarea name="comments" id="event" class="text-input" name="event"></textarea>
+
+
+                <div class="post-container" id="post-container">
+                   
+                
                 </div>
-            </div>
-            <div class="main-container">
-                <div class="label-container">
-                    <div class="title">Event date</div>
-                    <div class="sub-title">Select the date when this event occurred</div>
+                <div class="btn-container">
+                    <button class="add" type="submit" id="save-btn"><span class="primary-ico-btn"></span>Save</button>
+                   <!--  <button class="add"  id="save-btn"><span class="primary-ico-btn"></span>Save</button> -->
                 </div>
-                <div class="input-container">
-                    <input type="date" class="text-input" id="event-date">
-                </div>
-            </div>
-    
-    
-            <div class="btn-container">
-                <button class="add" type="submit" id="add-btn"><span class="primary-ico-btn"></span>Save</button>
-            </div>
-            <div id="response-message"></div>
+                
         </form>
+
     </div>
-    
+    </div>
+   
     <!-- --------------------- -->
-    <div class="menu-container">
+    <!-- <div class="menu-container" id="menu-container">
         <span class="material-symbols-outlined" id="profile" onclick="window.location='/profile.html'">person</span>
         <span class="material-symbols-outlined" id="main" onclick="window.location.href='/index.html'">dashboard</span>
         <span class="material-symbols-outlined" id="add-page" onclick="window.location.href='/create-new.html'">add_box</span>
         <span class="material-symbols-outlined" id="milestones">beenhere</span>
-    </div>
-   
+    </div> -->
+    <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
     <script src="/js/newstone.js"></script>
+    
 </body>
 
 </html>

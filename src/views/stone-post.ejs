@@ -1,18 +1,23 @@
+<div class="box-container">
+    <div class="main-container">
+        <div class="label-container">
+            <div class="title" id="date">
+                <%= date %>
+            </div>
+            <div class="sub-title" id="title">
+                <%= title %>
+            </div>
+            <div class="milestone" id="milestone">From Milestone: <%= milestoneID %>
+            </div>
 
-    <div class="box-container">
-        <div class="main-container">
-            <div class="label-container">
-                <div class="title" id="date"><%= date %></div>
-                <div class="sub-title" id="title"> <%= title %></div>
-                <div class="milestone" id="milestone">From Milestone: <%= milestoneID %></div>
-                
-            </div>
-            
-            <div class="label-container">
-                <div class="event" id="event"><p><%= event %></p></div>
-            </div>
-            <div class="tools">
-                <span class="material-symbols-outlined">edit</span>
-            </div>
         </div>
+
+        <div class="tools">
+            <span class="material-symbols-outlined">edit</span>
+        </div>
+        
+        <div class="event" id="event"><%- event %></div>
+
+        
     </div>
+</div>
