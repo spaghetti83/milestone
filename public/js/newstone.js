@@ -32,6 +32,8 @@ const fetchMilestoneData = ()=>{
     .catch(err => console.log('Error fetching Milestones', err))
   }
   fetchMilestoneData()
+
+  
   
 
   form.addEventListener('submit', (event)=>{
@@ -63,6 +65,8 @@ const textBtn = document.getElementById('post-text')
 const drawBtn = document.getElementById('post-draw')
 const stickersBtn = document.getElementById('post-sticker')
 const output = document.getElementById('output')
+
+
 
 
 let idCount = 0
@@ -230,10 +234,6 @@ let idCount = 0
       if(elementFocus){
         textElement.style.transform = `scale(${scaleFactor})`
       }
-      
-      
-        
-      
       
       output.textContent = output.textContent =  ((diffrenceSecond / seconTouchMoving) + lastScaleFactor)
     }
@@ -419,4 +419,33 @@ let idCount = 0
   }
   
 
- 
+ /* LOAD A POST TO EDIT */
+const loadHtml = ()=> {
+  const pageLocalStorage = 'stonePostCode'
+  const innerCode = localStorage.getItem(pageLocalStorage)
+  if(innerCode !== null){
+    const tempEl = document.createElement('div')
+    tempEl.innerHTML = innerCode
+    const nodes = tempEl.childNodes
+    console.log(nodes[0].length)
+    
+    for (let i = 0; i< nodes.length; i++) {
+    
+     if(nodes[i].id === 'title'){
+      title.value = nodes[i].textContent
+      console.log('title',nodes[i].textContent)
+     }
+     if(nodes[i].id === 'date'){
+      eventDate.value = nodes[i].textContent
+      console.log('date',nodes[i].textContent)
+     }
+     if(nodes[i].id === 'event'){
+      container.innerHTML = nodes[i]
+     }
+    }
+    console.log('LOADED LOCAL STORAGE')
+    
+  //localStorage.removeItem(pageLocalStorage)
+}
+}
+loadHtml()

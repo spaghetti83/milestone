@@ -40,7 +40,8 @@
   'FILL' 1,
   'wght' 400,
   'GRAD' 0,
-  'opsz' 24
+  'opsz' 24;
+  user-select: none;
 }
 .material-symbols-outlined:hover {
     cursor: pointer;
@@ -204,8 +205,8 @@ button {
 .tools{
     display: flex;
     flex-direction: row;
-    align-content: end;
-    background-color: #187e79;
+    justify-content: end;
+    
 }
 .event{
     border: solid #dbdbdb;
