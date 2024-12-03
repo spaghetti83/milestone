@@ -73,6 +73,8 @@ const output = document.getElementById('output')
 
 let idCount = 0
     
+
+  // TEXT
   textBtn.addEventListener('click', ()=>{
     idCount += 1
     const textElement = document.createElement('div')
@@ -81,20 +83,20 @@ let idCount = 0
     textElement.classList = 'divText'
     textElement.id = `text-id${idCount}`
     textElement.style.position = 'absolute'
-    textElement.style.left = '10px'
-    textElement.style.top = '10px'
-    /* textElement.style.height = 'auto' */
-    //textElement.style.transform = 'translate(-50%,-50%)'
+    textElement.style.left = '50%'
+    textElement.style.top = '50%'
+    textElement.style.transform = 'translate(-50%,-50%)'
     textElement.style.backgroundColor = 'transparent'
     textElement.style.fontSize = '24px'
     textElement.style.color = '#8f8f8f'
     textElement.style.textAlign = 'center'
     textElement.style.color = 'black'
+    textElement.style.textShadow = '1px 1px 0 gray'
     textElement.textContent = 'double tap to edit'
     textElement.style.width = '1fr'
     textElement.tabIndex = '0'
-    //textElement.style.zIndex = '100' + idCount
     textElement.style.transform = 'scale(1)'
+    textElement.style.zIndex = idCount
     console.log(textElement)
     container.appendChild(textElement)
     //
@@ -103,13 +105,26 @@ let idCount = 0
     let offsetY= 0
     let firstTap = false
     textElement.addEventListener('touchstart', (e)=>{
+      const indZ = ()=>{
+        console.log('NODES',container.childNodes.length)
+        for (let i = 1; i < container.childNodes.length; i++) {
+         console.log('NODES',container.childNodes[i].id)
+          if(container.childNodes[i].id !== textElement.id){
+            container.childNodes[i].style.zIndex = i
+          }else{
+            textElement.style.zIndex = container.childNodes.length + 1 
+          }
+          }
+          
+      }
+
       if(e.touches.length === 1){
+        indZ()
       isDragging = true
       console.log('touches',e.touches)
       offsetX = textElement.offsetLeft - e.touches[0].clientX
       offsetY = textElement.offsetTop - e.touches[0].clientY
       console.log('mouse down',textElement.offsetLeft,e.touches[0].clientX)
-      
       }
       
       
@@ -280,6 +295,9 @@ let idCount = 0
                 <div id="font"><span class="material-symbols-outlined">
                         glyphs
                     </span></div>
+                <div id="font"><span class="material-symbols-outlined">
+                        shadow
+                    </span></div>
                 <div id="color"><span class="material-symbols-outlined">
                         palette
                     </span></div>
@@ -293,10 +311,12 @@ let idCount = 0
     ////PANEL
     const editor = document.createElement('div')
     editor.innerHTML = strEditor
+    editor.position = 'absolute'
     editor.style.zIndex = '100'
-
+    
+    console.log('EDITOR Z INDEX',editor.style.zIndex)
     /////TOOL
-    formContainer.appendChild(editor)
+    container.appendChild(editor)
     const text = document.getElementById('text')
     const backBtn = document.getElementById('back')
     const doneBtn = document.getElementById('done')
@@ -348,7 +368,7 @@ let idCount = 0
     
     ///BACK BUTTON
     backBtn.addEventListener('click',()=> {
-      formContainer.removeChild(editor)
+      container.removeChild(editor)
       menu.style.display = 'flex'
     })
 
@@ -356,7 +376,7 @@ let idCount = 0
     ///DONE BUTTON
     doneBtn.addEventListener('click',()=> {
       
-      formContainer.removeChild(editor)
+      container.removeChild(editor)
       //menu.style.display = 'flex'
       targetElement.style.whiteSpace = 'pre-wrap'
       targetElement.textContent = text.value
@@ -421,6 +441,7 @@ let idCount = 0
 
   //IMAGE UPLOAD
   imageBtn.addEventListener('click',()=>{
+    
     imageUpload.click()
   })
   imageUpload.addEventListener('change',(event)=>{
@@ -441,19 +462,38 @@ let idCount = 0
       img.style.left = '0px'
       img.style.top = '0px'
       img.id = `img-${idCount}`
+      img.style.zIndex = idCount
       console.log('IDCOUNT', img.id)
       container.appendChild(img)
     }
     reader.readAsDataURL(file)
-   
+    
     img.addEventListener('touchstart', (e)=>{
+      const indZ = ()=>{
+        for (let i = 1; i < container.childNodes.length; i++) {
+          console.log('NODES',container.childNodes[i])
+           if(container.childNodes[i].id !== img.id){
+             container.childNodes[i].style.zIndex = i
+           }else{
+             img.style.zIndex = container.childNodes.length + 1 
+           }
+           if(container.childNodes[i].id === 'editor'){
+           editor.style.zIndex = '100'
+           }
+         }
+        
+      }
+
+
       if(e.touches.length === 1){
+      indZ()
       isDragging = true
       console.log('touches',e.touches)
       offsetX = img.offsetLeft - e.touches[0].clientX
       offsetY = img.offsetTop - e.touches[0].clientY
       console.log('mouse down',img.offsetLeft,e.touches[0].clientX)
-      
+      img.style.zIndex = idCount + 1
+      console.log('idCount',img.style.zIndex)
       }
       
       
@@ -596,6 +636,8 @@ let idCount = 0
 
 
   })
+
+
 
 
  /* LOAD A POST TO EDIT */
