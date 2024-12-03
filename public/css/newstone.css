@@ -43,6 +43,8 @@
   'GRAD' 0,
   'opsz' 24;
   user-select: none;
+  font-size: large;
+  
 }
 .material-symbols-outlined:hover {
     cursor: pointer;
@@ -96,10 +98,7 @@ body{
     flex-direction: row;
     flex-wrap: wrap;
   }
-.label-container{
-   
-    
-}
+
 .title{
     font-size: larger;
     font-weight: bolder;
@@ -187,12 +186,7 @@ textarea{
     padding: 15px 0;
     
 }
-.post-tools-container{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-   
-}
+
 .post-container{
     border: solid #dbdbdb;
     height: 95vh;
@@ -204,12 +198,7 @@ textarea{
     overflow: hidden;
    
 }
-.tools{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    
-}
+
 
 #editor{
     position: fixed;
@@ -278,4 +267,22 @@ pre{
     flex-direction: row;
     justify-content: center;
     margin: 15px 0;
+}
+
+.post-tools-container{
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    justify-content: start;
+    margin: 0;
+   
+}
+#text-input{
+    margin: 0;
+}
+.tools{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+   align-content:center;
 }

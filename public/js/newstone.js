@@ -59,11 +59,13 @@ const fetchMilestoneData = ()=>{
 
 
 
+///POST SETTINGS
 
 const container = document.getElementById('post-container')
 const textBtn = document.getElementById('post-text')
 const drawBtn = document.getElementById('post-draw')
-const stickersBtn = document.getElementById('post-sticker')
+const imageBtn = document.getElementById('post-sticker')
+const imageUpload = document.getElementById('imageUpload')
 const output = document.getElementById('output')
 
 
@@ -250,8 +252,6 @@ let idCount = 0
   })
   
   
-
-
   const editTextPanel = (elementID,textValue)=>{
     const targetElement = document.getElementById(elementID)
     //const menu = document.getElementById('menu-container')
@@ -419,8 +419,188 @@ let idCount = 0
   }
   
 
+  //IMAGE UPLOAD
+  imageBtn.addEventListener('click',()=>{
+    imageUpload.click()
+  })
+  imageUpload.addEventListener('change',(event)=>{
+    console.log('CHANGE')
+    const file = event.target.files[0]
+    console.log(file)
+    const reader = new FileReader()
+    console.log(reader.readyState)
+    console.log(reader)
+    const img = document.createElement('img')
+    reader.onload = (event)=>{
+      idCount++
+      console.log('ON LOAD')
+      
+      img.src = event.target.result
+      img.style.maxWidth = '100vw'
+      img.style.position = 'absolute'
+      img.style.left = '0px'
+      img.style.top = '0px'
+      img.id = `img-${idCount}`
+      console.log('IDCOUNT', img.id)
+      container.appendChild(img)
+    }
+    reader.readAsDataURL(file)
+   
+    img.addEventListener('touchstart', (e)=>{
+      if(e.touches.length === 1){
+      isDragging = true
+      console.log('touches',e.touches)
+      offsetX = img.offsetLeft - e.touches[0].clientX
+      offsetY = img.offsetTop - e.touches[0].clientY
+      console.log('mouse down',img.offsetLeft,e.touches[0].clientX)
+      
+      }
+      
+      
+      
+    })
+  
+    container.addEventListener('touchend', (e)=>{
+      
+      if(e.touches.length === 1){
+      if(isDragging){
+        isDragging = false
+      }
+      console.log('mouse up',isDragging)
+    }
+    console.log(img)
+    })
+
+    img.addEventListener('touchmove', (e)=>{
+      if(e.touches.length === 1){
+      if (!isDragging) return;
+      e.preventDefault()
+      console.log('mousemove')
+      const newX = e.touches[0].clientX + offsetX
+      const newY = e.touches[0].clientY + offsetY
+      img.style.left = `${newX}px`
+      img.style.top = `${newY}px`
+      console.log('mouse move',e.clientX,newX)
+      }
+      
+    })
+
+    img.addEventListener('input',()=>{
+      if(e.touches.length === 1){
+        img.style.height = 'auto'
+        img.style.display = 'inline-block'
+        img.style.height =  `${img.scrollHeight}px`
+      
+      }
+    })
+    img.addEventListener('touchend',()=>{
+      firstDoubleTap = true
+    })
+//////////////////////////////////////
+////PINCH TO ZOOM////////////////////
+////////////////////////////////////
+    let firstTouch = 0
+    let secondTouch = 0
+    let seconTouchMoving = 0
+    let startingDistance = 0
+    let currentDistance = 0
+    let elementFocus = false
+    let scaleFactor = 1
+    let lastScaleFactor = 0
+    let lastTap = 0
+
+
+    
+   
+    img.addEventListener('touchstart',(e)=>{
+    
+     
+      
+    //DOUBLE TAP TO EDIT
+    if(e.touches.length === 1){
+    elementFocus = true
+
+    const currentTime = new Date().getTime()
+    let timeLength = currentTime - lastTap
+
+    if(timeLength < 300){
+      output.textContent = 'DOUBLE TAP'
+      editTextPanel(img.id,img.innerHTML)
+      
+    }else{
+      lastTap = currentTime
+      output.textContent = 'SINGLE TAP'
+    }
+    }
+    
+
+   })
+
+   img.addEventListener('touchend',(e)=>{
+    
+    elementFocus = false
+   })
+    
+   img.addEventListener('touchmove',(e)=>{
+    
+    if(e.touches.length === 2){
+      e.preventDefault()
+      
+      
+    }
+    
+   })
+
+   container.addEventListener('touchstart',(e)=>{
+    if(e.touches.length === 2){
+      e.preventDefault()
+      firstTouch = Math.abs(Math.round(e.touches[0].clientX - e.touches[1].clientX))
+      secondTouch = Math.abs(Math.round(e.touches[0].clientY - e.touches[1].clientY))
+      output.textContent = firstTouch + '|' + secondTouch
+    }
+   })
+
+
+   container.addEventListener('touchmove',(e)=>{
+    
+
+    if(e.touches.length === 2){
+      e.preventDefault()
+      seconTouchMoving = Math.abs(Math.round(e.touches[0].clientY - e.touches[1].clientY))
+      let diffrenceSecond =  seconTouchMoving - secondTouch
+      scaleFactor = (diffrenceSecond / seconTouchMoving) + lastScaleFactor
+      let maxScaleFactor = 4
+      let minScaleFactor = 0.5
+      if (scaleFactor <= minScaleFactor){
+        scaleFactor = minScaleFactor
+      }
+      if (scaleFactor >= maxScaleFactor){
+        scaleFactor = maxScaleFactor
+      }
+      if(elementFocus){
+        img.style.transform = `scale(${scaleFactor})`
+      }
+      
+      output.textContent = output.textContent =  ((diffrenceSecond / seconTouchMoving) + lastScaleFactor)
+    }
+    
+   })
+
+   container.addEventListener('touchend',(e)=>{
+      lastScaleFactor = scaleFactor
+      
+   })
+
+
+
+
+
+  })
+
+
  /* LOAD A POST TO EDIT */
-const loadHtml = ()=> {
+/* const loadHtml = ()=> {
+
   const pageLocalStorage = 'stonePostCode'
   const innerCode = localStorage.getItem(pageLocalStorage)
   if(innerCode !== null){
@@ -428,7 +608,7 @@ const loadHtml = ()=> {
     tempEl.innerHTML = innerCode
     const nodes = tempEl.childNodes
     console.log(nodes[0].length)
-    
+
     for (let i = 0; i< nodes.length; i++) {
     
      if(nodes[i].id === 'title'){
@@ -448,4 +628,6 @@ const loadHtml = ()=> {
   //localStorage.removeItem(pageLocalStorage)
 }
 }
-loadHtml()
+loadHtml() */
+
+
