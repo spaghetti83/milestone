@@ -4,7 +4,7 @@ const subTitleElement  = document.getElementById('sub-title')
 const stonesCounter = document.getElementById('counter')
 const body = document.querySelector('body')
 
-
+const googleFontLogo = 'beenhere'
 
 /* add fetch data to get userMilestones values. the actual values will be stored in a MongoDB */
 
@@ -12,7 +12,7 @@ const userMilestones = [
     {
       "user_id": 123,
       "milestoneID": 1,
-      "milestone_start_year": 1990,
+      "milestone_start_year": 2000,
       "color": "blue",
       "title": "Nature Photographer",
       "subtitle": "Capturing the beauty of the world, one shot at a time.",
@@ -23,7 +23,7 @@ const userMilestones = [
     {
       "user_id": 124,
       "milestoneID": 2,
-      "milestone_start_year": 2001,
+      "milestone_start_year": 1983,
       "color": "green",
       "title": "Track&Field Runner",
       "subtitle": "Never give up.",
@@ -36,52 +36,52 @@ const userMilestones = [
 let { userID, milestoneID,milestone_start_year, color, title, subtitle, photo_path, stones,timestamp} = userMilestones
 
 const milestoneData = [
-        {
-          "id": 123,
-          "date": "15-04-2000",
-          "event": "First 5k race completed",
-          "milestone": "running",
-          "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z",
-          "milestoneID" : 2
-        },
-        {
-          "id": 123,
-          "date": "10-10-2005",
-          "event": "10k race personal best",
-          "milestone": "running",
-          "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z",
-          "milestoneID" : 2
-        },
-        {
-          "id": 123,
-          "date": "21-05-2011",
-          "event": "First half marathon completed",
-          "milestone": "running",
-          "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z",
-          "milestoneID" : 2
-        },
-        {
-          "id": 123,
-          "date": "05-12-2018",
-          "event": "First marathon completed",
-          "milestone": "running",
-          "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z",
-          "milestoneID" : 2
-        },
-        {
-          "id": 123,
-          "date": "02-07-2024",
-          "event": "Ultramarathon completed",
-          "milestone": "running",
-          "color": "green",
-          "timestamp": "2024-10-07T22:40:00Z",
-          "milestoneID" : 2
-        }
-      ]
+    {
+      "id": 123,
+      "date": "2000-04-15",
+      "event": "First 5k race completed",
+      "milestone": "running",
+      "color": "green",
+      "timestamp": "2024-10-07T22:40:00Z",
+      "milestoneID": 2
+    },
+    {
+      "id": 123,
+      "date": "2005-10-10",
+      "event": "10k race personal best",
+      "milestone": "running",
+      "color": "green",
+      "timestamp": "2024-10-07T22:40:00Z",
+      "milestoneID": 2
+    },
+    {
+      "id": 123,
+      "date": "2011-05-21",
+      "event": "First half marathon completed",
+      "milestone": "running",
+      "color": "green",
+      "timestamp": "2024-10-07T22:40:00Z",
+      "milestoneID": 2
+    },
+    {
+      "id": 123,
+      "date": "2018-12-05",
+      "event": "First marathon completed",
+      "milestone": "running",
+      "color": "green",
+      "timestamp": "2024-10-07T22:40:00Z",
+      "milestoneID": 2
+    },
+    {
+      "id": 123,
+      "date": "2024-07-02",
+      "event": "Ultramarathon completed",
+      "milestone": "running",
+      "color": "green",
+      "timestamp": "2024-10-07T22:40:00Z",
+      "milestoneID": 1
+    }
+  ]
 
 let {ev_id,ev_date,ev_event,ev_milestone,ev_color,ev_timestamp} = milestoneData
 
@@ -100,7 +100,7 @@ const createUserMilestone = () => {
     const bodyElement = document.createElement('div')
     const childrenElements =[]
     userMilestones.forEach((el,index) => {        
-        console.log('index:', index)
+        
         const milestoneLayout = `
                 <div class="milestone-container" >
                         <div class="milestone-header">
@@ -125,7 +125,7 @@ const createUserMilestone = () => {
                 `
         const milestoneDiv = document.createElement('div')
         milestoneDiv.innerHTML = milestoneLayout
-        console.log(milestoneDiv)
+        
         body.append(milestoneDiv)  
         
         /* calculation to get the length of the timeline
@@ -136,12 +136,35 @@ const createUserMilestone = () => {
         in the timeline, basicly you can zoom in and out incresing o decresing it */
         const yearSize = 200
         const timelineLength = calculateTime(el.milestone_start_year) * yearSize
-        timeline.style.width = `${timelineLength}px`
+        /* since the time line ends at the biginnig of the current year we need to add the
+        remain part till today, here the calculus */
+        const getDaysFromStartOfYear = (year,month = 0, day = 0) => {
+            const dateT = new Date()
+            const calcThisYear = new Date(dateT.getFullYear(year,0,0), month, day)
+            const millsecTillToday = dateT - calcThisYear
+            const oneDay = 1000 * 60 * 60 * 24
+            const daysTillToday = Math.floor(millsecTillToday / oneDay)
+            console.log('days till today',daysTillToday)
+            return daysTillToday
+            
+        }
+        
+         //number of the day in a scale of 365 per year
+         const getYear = new Date()
+         console.log('this year',getDaysFromStartOfYear(getYear.getFullYear()))
+         getDaysFromStartOfYear(getYear.getFullYear())
+         let currentYearTimeline = Math.floor((yearSize / 365) * getDaysFromStartOfYear(getYear.getFullYear()))
+         console.log(currentYearTimeline)
+
+
+        /* I will add this value at the end of the time line, for the days passed from the
+        beginnig of this year untill today*/
+        timeline.style.width = `${timelineLength + currentYearTimeline}px`
         timeline.style.marginRight = `${50}px`
         /* yearline are the little vertical line at the beginning of every year in
         the timeline, IMPORTANT: yearInc is -(yearSize) to start at the very beginning of the time line with the right year*/
         let yearInc = -(yearSize)
-        console.log('calc',calculateTime(el.milestone_start_year))
+        
         for( let i = 0; i<= calculateTime(el.milestone_start_year); i++){
 
             
@@ -156,7 +179,6 @@ const createUserMilestone = () => {
             const today = new Date()
             const thisYear = today.getFullYear()
             let labelYEarCaluculator = thisYear - calculateTime(el.milestone_start_year) + i
-            console.log('Calc Year Label',labelYEarCaluculator)
             ////////////////////////////////////////////
             let yearsLabel = document.createElement('div')
             yearsLabel.classList = 'years-label'
@@ -172,32 +194,24 @@ const createUserMilestone = () => {
             yearInc = yearInc + yearSize
             yearsLine.style.marginLeft = `${yearInc}px`
             yearsLabel.style.marginLeft = `${yearInc + 5}px`
-            console.log('yearsInc',yearInc)
 
-            
-            
-            
-            
-        
-
-            
         }
         
         /* stones population */
-        /* const timelineNode = document.getElementById(`timeline${index}`)
+        const timelineNode = document.getElementById(`timeline${index}`)
         const tempMilestoneID = el.milestoneID
         
         milestoneData.forEach( (el,index) => {
             if(el.milestoneID === tempMilestoneID){
-                let stoneString = `<span id="stone${index}" "class="material-symbols-outlined">beenhere</span>`
+                let stoneString = `<span id="stone${index}" class="material-symbols-outlined"></span>`
                 let tempDiv = document.createElement('div')
-                tempDiv.innerHTML = stoneString
-                let inc = 0
-                inc = inc + yearSize
-                tempDiv.style.marginLeft = `${inc}px`
-                timelineNode.append(tempDiv)
+                tempDiv.classList = "material-symbols-outlined"
+                tempDiv.id = `stone${index}`
+                tempDiv.textContent = googleFontLogo //this string stands for a logo in material-symbols-outlined from google fonts
+               
+                timelineNode.appendChild(tempDiv)
             }
-        }) */
+        })
         
     });
     

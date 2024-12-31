@@ -94,7 +94,7 @@ body{
 .timeline{
     position: relative;
     width: 100px;
-    height: 5px;
+    height: 3px;
     background-color: var(--timeline-color) ;
     margin-top: 50px;
 }
@@ -108,8 +108,10 @@ body{
 }
 .years-label{
     position: absolute;
-    margin-top: -20px;
-    
+    margin-top: -35px;
+    font-size: xx-large;
+    font-weight: 600;
+    color: rgba(143, 143, 143,20%);
     
 }
 .stones {
